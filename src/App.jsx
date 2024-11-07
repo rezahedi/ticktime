@@ -19,18 +19,16 @@ const todoList = [
 function App() {
 
   return (
-    <>
-      <div className="container">
-        <h1>Tick Time</h1>
-        <ul>
-          {todoList.map(item => (
-            <li key={item.id}>
-              {item.title}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+    <div className="container">
+      <h1>Tick Time</h1>
+      <ul>
+        {todoList.map(item => (
+          <li key={item.id}>
+            {item.title}
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
