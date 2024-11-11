@@ -1,10 +1,11 @@
 import Item from "./Item";
+import todoList from './dummyData'
 
-function List({ items }) {
+function List() {
 
   return (
     <up>
-      {items.map(item => (
+      {todoList.map(item => (
         <Item key={item.id} title={item.title} />
       ))}
     </up>
