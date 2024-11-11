@@ -1,4 +1,5 @@
 import './App.css'
+import List from './components/Todo/List'
 
 
 const todoList = [
@@ -21,13 +22,7 @@ function App() {
   return (
     <div className="container">
       <h1>Tick Time</h1>
-      <ul>
-        {todoList.map(item => (
-          <li key={item.id}>
-            {item.title}
-          </li>
-        ))}
-      </ul>
+      <List items={todoList} />
     </div>
   )
 }
