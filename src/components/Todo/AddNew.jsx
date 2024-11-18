@@ -13,7 +13,7 @@ function AddNew({ onAddNew }) {
     <form className="add-new" onSubmit={handleFormSubmission}>
       <label htmlFor="myInput">Add new todo</label>
       <div>
-        <input id="myInput" type="text" placeholder="Add new todo" />
+        <input id="myInput" type="text" placeholder="Ex: 'Do cleaning ...'" />
         <button type="submit">Add</button>
       </div>
     </form>

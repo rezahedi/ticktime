@@ -4,11 +4,11 @@ import todoList from './dummyData'
 function List() {
 
   return (
-    <ul>
+    <div>
       {todoList.map(item => (
         <Item key={item.id} todoItem={item} />
       ))}
-    </ul>
+    </div>
   )
 }
 
