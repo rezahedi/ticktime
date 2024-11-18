@@ -1,10 +1,10 @@
 
-function Item({ title }) {
+function Item({ todoItem }) {
   return (
     <li>
       <label>
         <input type="checkbox" />
-        {title}
+        {todoItem.title}
       </label>
     </li>
   )
