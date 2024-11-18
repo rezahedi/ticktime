@@ -13,7 +13,11 @@ function App() {
     <div className="container">
       <h1>Tick Time</h1>
       <AddNew onAddNew={setNewTodo} />
-      {newTodo!=='' && <p style={{color:'lightgreen'}}>{newTodo}</p>}
+      {newTodo &&
+        <p style={{color:'lightgreen'}}>
+          {newTodo}
+        </p>
+      }
       <List />
     </div>
   )
