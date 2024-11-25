@@ -1,12 +1,13 @@
 
-function Item({ title }) {
+/* eslint-disable react/prop-types */
+function Item({ todoItem }) {
   return (
-    <li>
+    <div>
       <label>
         <input type="checkbox" />
-        {title}
+        {todoItem.title}
       </label>
-    </li>
+    </div>
   )
 }
 
