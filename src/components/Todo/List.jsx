@@ -1,13 +1,13 @@
 import Item from "./Item";
-import todoList from './dummyData'
 
-function List() {
+function List({ todoList }) {
 
   return (
     <div>
-      {todoList.map(item => (
+      {todoList.length > 0 && todoList.map(item => (
         <Item key={item.id} todoItem={item} />
       ))}
+      {todoList.length === 0 && <p>No Todos, Yay!</p>}
     </div>
   )
 }

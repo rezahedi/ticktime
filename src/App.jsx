@@ -6,6 +6,7 @@ import { useState } from 'react'
 function App() {
 
   const [newTodo, setNewTodo] = useState('')
+  const [todoList, setTodoList] = useState([])
 
 
 
@@ -18,7 +19,7 @@ function App() {
           {newTodo}
         </p>
       }
-      <List />
+      <List todoList={todoList} />
     </div>
   )
 }
