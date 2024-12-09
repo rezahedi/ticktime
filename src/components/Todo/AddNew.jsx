@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import './style.css'
 
-function AddNew({ onAddNew }) {
+function AddNew( props ) {
+  const { onAddNew } = props
 
   const [title, setTitle] = useState('')
 

@@ -1,6 +1,7 @@
 import Item from "./Item";
 
-function List({ todoList }) {
+function List( props ) {
+  const { todoList } = props
 
   return (
     <div>
