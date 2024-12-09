@@ -1,10 +1,17 @@
 .add-new {
   display: flex;
   flex-direction: column;
+  margin:1rem 0
+}
+.add-new div{
+  display: flex;
 }
 .add-new input {
-  padding: 5px 10px;
+  padding: 7px 10px;
 }
 .add-new button {
   padding: 5px 20px;
+  background-color: gray;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
