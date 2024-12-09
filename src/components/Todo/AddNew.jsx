@@ -12,6 +12,11 @@ function AddNew({ onAddNew }) {
     e.target.reset()
   }
 
+  const handleTitleChange = (e) => {
+    const newTodoTitle = e.target.value
+    setTitle( newTodoTitle )
+  }
+
   return (
     <form className="add-new" onSubmit={handleFormSubmission}>
       <label htmlFor="myInput">Add new todo</label>
@@ -19,7 +24,7 @@ function AddNew({ onAddNew }) {
         <input
           id="myInput" type="text"
           value={title}
-          onChange={e=>setTitle(e.target.value)}
+          onChange={handleTitleChange}
           placeholder="Ex: Do cleaning ..."
         />
         <button type="submit">Add</button>
