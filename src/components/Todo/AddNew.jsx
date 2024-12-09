@@ -9,7 +9,7 @@ function AddNew({ onAddNew }) {
     e.preventDefault()
 
     onAddNew( title )
-    e.target.reset()
+    setTitle('')
   }
 
   const handleTitleChange = (e) => {
