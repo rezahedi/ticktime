@@ -5,7 +5,7 @@ function List( props ) {
 
   return (
     <div>
-      {todoList.length > 0 && todoList.map(item => (
+      {todoList && todoList.map(item => (
         <Item key={item.id} todoItem={item} />
       ))}
       {todoList.length === 0 && <p>No Todos, Yay!</p>}
