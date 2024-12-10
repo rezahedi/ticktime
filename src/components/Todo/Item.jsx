@@ -1,6 +1,8 @@
 
 /* eslint-disable react/prop-types */
-function Item({ todoItem }) {
+function Item( props ) {
+  const { todoItem } = props
+  
   return (
     <div>
       <label>

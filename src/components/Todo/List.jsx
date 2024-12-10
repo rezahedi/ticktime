@@ -1,13 +1,14 @@
 import Item from "./Item";
-import todoList from './dummyData'
 
-function List() {
+function List( props ) {
+  const { todoList } = props
 
   return (
     <div>
-      {todoList.map(item => (
+      {todoList && todoList.map(item => (
         <Item key={item.id} todoItem={item} />
       ))}
+      {todoList.length === 0 && <p>No Todos, Yay!</p>}
     </div>
   )
 }

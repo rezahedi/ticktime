@@ -5,20 +5,17 @@ import { useState } from 'react'
 
 function App() {
 
-  const [newTodo, setNewTodo] = useState('')
+  const [todoList, setTodoList] = useState([])
 
-
+  const addTodo = (newTodo) => {
+    setTodoList((prevData) => [...prevData, {id: Date.now(), title: newTodo} ])
+  }
 
   return (
     <div className="container">
       <h1>Tick Time</h1>
-      <AddNew onAddNew={setNewTodo} />
-      {newTodo &&
-        <p style={{color:'lightgreen'}}>
-          {newTodo}
-        </p>
-      }
-      <List />
+      <AddNew onAddNew={addTodo} />
+      <List todoList={todoList} />
     </div>
   )
 }

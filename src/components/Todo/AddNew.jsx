@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import './style.css'
 
-function AddNew({ onAddNew }) {
+function AddNew( props ) {
+  const { onAddNew } = props
 
   const [title, setTitle] = useState('')
 
@@ -9,7 +10,12 @@ function AddNew({ onAddNew }) {
     e.preventDefault()
 
     onAddNew( title )
-    e.target.reset()
+    setTitle('')
+  }
+
+  const handleTitleChange = (e) => {
+    const newTodoTitle = e.target.value
+    setTitle( newTodoTitle )
   }
 
   return (
@@ -19,7 +25,7 @@ function AddNew({ onAddNew }) {
         <input
           id="myInput" type="text"
           value={title}
-          onChange={e=>setTitle(e.target.value)}
+          onChange={handleTitleChange}
           placeholder="Ex: Do cleaning ..."
         />
         <button type="submit">Add</button>
