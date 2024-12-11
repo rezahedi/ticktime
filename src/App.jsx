@@ -12,11 +12,11 @@ function App() {
   }
 
   return (
-    <div className="container">
+    <>
       <h1>Tick Time</h1>
       <AddNew onAddNew={addTodo} />
       <List todoList={todoList} />
-    </div>
+    </>
   )
 }
 
