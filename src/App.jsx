@@ -1,20 +1,7 @@
 import './App.css'
 import List from './components/Todo/List'
 import AddNew from './components/Todo/AddNew'
-import { useState, useEffect } from 'react'
-
-const useSemiPersistentState = () => {
-
-  const [todoList, setTodoList] = useState(
-    JSON.parse(localStorage.getItem('savedTodoList')) || []
-  )
-
-  useEffect(() => {
-    localStorage.setItem('savedTodoList', JSON.stringify(todoList))
-  }, [todoList])
-
-  return [todoList, setTodoList]
-}
+import useSemiPersistentState from './hooks/useSemiPersistentState'
 
 function App() {
 
