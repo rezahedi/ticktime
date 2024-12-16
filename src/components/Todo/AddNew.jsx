@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './style.css'
+import InputWithLabel from '../InputWithLabel'
 
 function AddNew( props ) {
   const { onAddNew } = props
@@ -20,16 +21,8 @@ function AddNew( props ) {
 
   return (
     <form className="add-new" onSubmit={handleFormSubmission}>
-      <label htmlFor="myInput">Add new todo</label>
-      <div>
-        <input
-          id="myInput" type="text"
-          value={title}
-          onChange={handleTitleChange}
-          placeholder="Ex: Do cleaning ..."
-        />
-        <button type="submit">Add</button>
-      </div>
+      <InputWithLabel title={title} handleTitleChange={handleTitleChange} />
+      <button type="submit">Add</button>
     </form>
   )
 }
