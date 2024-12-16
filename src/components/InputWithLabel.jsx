@@ -1,15 +1,22 @@
+import { useRef, useEffect } from 'react'
+
 
 export default function InputWithLabel(props) {
   const { children, title, handleTitleChange } = props;
+  const inputRef = useRef(null)
+
+  useEffect(() => {
+    inputRef.current.focus()
+  })
 
   return (
     <>
       <label htmlFor="myInput">{children}</label>
       <input
         id="myInput" type="text"
+        ref={inputRef}
         value={title}
         onChange={handleTitleChange}
-        autoFocus={true}
         required={true}
         placeholder="Ex: Do cleaning ..."
       />
