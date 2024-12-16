@@ -8,7 +8,7 @@ function List( props ) {
       {todoList && todoList.map(item => (
         <Item key={item.id} todoItem={item} onRemoveTodo={() => onRemoveTodo(item.id)} />
       ))}
-      {todoList.length === 0 && <p>No Todos, Yay!</p>}
+      {todoList.length === 0 && <p className='empty-list'>No Todos, Yay!</p>}
     </div>
   )
 }

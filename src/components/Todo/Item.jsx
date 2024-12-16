@@ -4,10 +4,10 @@ function Item( props ) {
   const { todoItem, onRemoveTodo } = props
   
   return (
-    <div>
+    <div className='todo-item'>
       <label>
         <input type="checkbox" />
-        {todoItem.title}
+        <span>{todoItem.title}</span>
         <button onClick={onRemoveTodo}>x</button>
       </label>
     </div>
