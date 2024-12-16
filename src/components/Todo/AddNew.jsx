@@ -21,7 +21,9 @@ function AddNew( props ) {
 
   return (
     <form className="add-new" onSubmit={handleFormSubmission}>
-      <InputWithLabel label={'Title'} title={title} handleTitleChange={handleTitleChange} />
+      <InputWithLabel title={title} handleTitleChange={handleTitleChange}>
+        <b>Title</b>
+      </InputWithLabel>
       <button type="submit">Add</button>
     </form>
   )

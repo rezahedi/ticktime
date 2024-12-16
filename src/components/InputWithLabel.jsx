@@ -1,10 +1,10 @@
 
 export default function InputWithLabel(props) {
-  const { label, title, handleTitleChange } = props;
+  const { children, title, handleTitleChange } = props;
 
   return (
     <>
-      <label htmlFor="myInput">{label}</label>
+      <label htmlFor="myInput">{children}</label>
       <input
         id="myInput" type="text"
         value={title}
