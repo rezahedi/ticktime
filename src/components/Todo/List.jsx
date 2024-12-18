@@ -5,7 +5,7 @@ function List( props ) {
 
   return (
     <div>
-      {todoList && todoList.map(item => (
+      {todoList.map(item => (
         <Item key={item.id} todoItem={item} onRemoveTodo={onRemoveTodo} />
       ))}
       {todoList.length === 0 && <p className='empty-list'>No Todos, Yay!</p>}
