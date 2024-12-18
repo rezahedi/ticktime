@@ -6,7 +6,8 @@ export default function InputWithLabel(props) {
   const inputRef = useRef(null)
 
   useEffect(() => {
-    inputRef.current.focus()
+    if( inputRef?.current )
+      inputRef.current.focus()
   })
 
   return (
