@@ -1,10 +1,8 @@
 .add-new {
   display: flex;
-  flex-direction: column;
-  margin:1rem 0
-}
-.add-new div{
-  display: flex;
+  margin:1rem 0;
+  align-items: center;
+  gap: .5rem;
 }
 .add-new input {
   padding: 7px 10px;
@@ -14,4 +12,25 @@
   background-color: gray;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+}
+.todo-item {
+  margin-bottom:.5rem
+}
+.todo-item label{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+}
+.todo-item label span{
+  flex-grow: 1;
+}
+.todo-item button{
+  padding: 5px 10px;
+}
+.empty-list{
+  padding: 3rem;
+  font-size: 1.5rem;
+  text-align: center;
 }

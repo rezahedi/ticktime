@@ -1,14 +1,14 @@
 import Item from "./Item";
 
 function List( props ) {
-  const { todoList } = props
+  const { todoList, onRemoveTodo } = props
 
   return (
     <div>
-      {todoList && todoList.map(item => (
-        <Item key={item.id} todoItem={item} />
+      {todoList.map(item => (
+        <Item key={item.id} todoItem={item} onRemoveTodo={onRemoveTodo} />
       ))}
-      {todoList.length === 0 && <p>No Todos, Yay!</p>}
+      {todoList.length === 0 && <p className='empty-list'>No Todos, Yay!</p>}
     </div>
   )
 }
