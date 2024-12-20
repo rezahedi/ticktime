@@ -41,7 +41,10 @@ function App() {
     <>
       <h1>Tick Time</h1>
       <AddNew onAddNew={addTodo} />
-      <List todoList={todoList} onRemoveTodo={removeTodo} />
+      {isLoading && <p>Loading...</p>}
+      {!isLoading &&
+        <List todoList={todoList} onRemoveTodo={removeTodo} />
+      }
     </>
   )
 }
