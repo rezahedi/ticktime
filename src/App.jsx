@@ -2,6 +2,7 @@ import './App.css'
 import List from './components/Todo/List'
 import AddNew from './components/Todo/AddNew'
 import { useState, useEffect } from 'react'
+import LoadingSkeleton from './components/Todo/LoadingSkeleton'
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
     <>
       <h1>Tick Time</h1>
       <AddNew onAddNew={addTodo} />
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <LoadingSkeleton />}
       {!isLoading &&
         <List todoList={todoList} onRemoveTodo={removeTodo} />
       }
