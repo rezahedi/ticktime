@@ -1,10 +1,12 @@
+/* eslint-disable react/prop-types */
 import './Skeleton.css'
 
-export default function Skeleton() {
+export default function Skeleton({
+  width = 'auto',
+  height = 'auto'
+}) {
   return (
-    <div>
-      <div className='loading-skeleton'></div>
-      <div className='loading-skeleton'></div>
+    <div style={{width, height}}>
       <div className='loading-skeleton'></div>
     </div>
   )

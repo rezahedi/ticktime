@@ -42,7 +42,13 @@ function App() {
     <>
       <h1>Tick Time</h1>
       <AddNew onAddNew={addTodo} />
-      {isLoading && <Skeleton />}
+      {isLoading && 
+        <div style={{display:'flex', flexDirection:'column', gap:'1.7rem'}}>
+          <Skeleton />
+          <Skeleton />
+          <Skeleton />
+        </div>
+      }
       {!isLoading &&
         <List todoList={todoList} onRemoveTodo={removeTodo} />
       }
