@@ -1,0 +1,36 @@
+.loading-skeleton {
+    position:relative;
+    height: 15px;
+    background-color: #2e2d2d;
+    overflow: hidden;
+    border-radius: 4px;
+    
+    &:before {
+      position: absolute;
+      top:0px;
+      left:0px;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #2e2d2d 0%, #4e4e4e 40%, #4e4e4e 60%, #2e2d2d 100%);
+      animation-duration: 2s;
+      animation-name: slide;
+      animation-iteration-count: infinite;
+  
+    }
+  }
+  
+  
+  @keyframes slide {
+    from {
+      transform: translateX(-100%); 
+    }
+    
+    50% {
+      transfrom: translateX(0%);
+    }
+  
+    to {
+      transform: translateX(100%); 
+    }
+  }
