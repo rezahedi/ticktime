@@ -11,6 +11,7 @@ function App() {
     /*JSON.parse(localStorage.getItem('savedTodoList')) ||*/ []
   )
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
     const myPromise = new Promise((resolve, reject) => {
@@ -21,6 +22,12 @@ function App() {
     myPromise.then((result) => {
       setTodoList(result)
       setIsLoading(false)
+    })
+    
+    myPromise.catch((error) => {
+      setIsLoading(false)
+      setError("Something went wrong")
+      console.error(error)
     })
   }, [])
 
@@ -49,7 +56,8 @@ function App() {
           <Skeleton />
         </div>
       }
-      {!isLoading &&
+      {error && <p className='error'>{error}</p>}
+      {!error && !isLoading &&
         <List todoList={todoList} onRemoveTodo={removeTodo} />
       }
     </>
