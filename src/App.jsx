@@ -28,9 +28,20 @@ function App() {
         throw new Error(`Error: ${response.status}`)
       }
       const data = await response.json()
-      console.log("Fetch result:", data)
+
+      const todos = data.records.map((item) => {
+        return {
+          id: item.id,
+          title: item.fields.title,
+          completedAt: item.fields.completedAt,
+        }
+      })
+      setTodoList(todos)
+      setIsLoading(false)
 
     } catch (error) {
+      setIsLoading(false)
+      setError("Something went wrong with the API")
       console.error(error)
     }
   }
@@ -40,22 +51,6 @@ function App() {
     (async ()=>{
       await fetchData()
     })()
-    
-    // const myPromise = new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //     resolve( JSON.parse(localStorage.getItem('savedTodoList')) || [] )
-    //   }, 2000)
-    // })
-    // myPromise.then((result) => {
-    //   setTodoList(result)
-    //   setIsLoading(false)
-    // })
-    
-    // myPromise.catch((error) => {
-    //   setIsLoading(false)
-    //   setError("Something went wrong")
-    //   console.error(error)
-    // })
   }, [])
 
   useEffect(() => {
