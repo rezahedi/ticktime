@@ -13,22 +13,49 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    const myPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve( JSON.parse(localStorage.getItem('savedTodoList')) || [] )
-      }, 2000)
-    })
-    myPromise.then((result) => {
-      setTodoList(result)
-      setIsLoading(false)
-    })
-    
-    myPromise.catch((error) => {
-      setIsLoading(false)
-      setError("Something went wrong")
+  const fetchData = async () => {
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
+      },
+      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`,
+    }
+
+    try {
+      const response = await fetch(options.url, options)
+      if ( !response.ok ) {
+        throw new Error(`Error: ${response.status}`)
+      }
+      const data = await response.json()
+      console.log("Fetch result:", data)
+
+    } catch (error) {
       console.error(error)
-    })
+    }
+  }
+
+
+  useEffect(() => {
+    (async ()=>{
+      await fetchData()
+    })()
+    
+    // const myPromise = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve( JSON.parse(localStorage.getItem('savedTodoList')) || [] )
+    //   }, 2000)
+    // })
+    // myPromise.then((result) => {
+    //   setTodoList(result)
+    //   setIsLoading(false)
+    // })
+    
+    // myPromise.catch((error) => {
+    //   setIsLoading(false)
+    //   setError("Something went wrong")
+    //   console.error(error)
+    // })
   }, [])
 
   useEffect(() => {
