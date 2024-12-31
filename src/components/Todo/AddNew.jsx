@@ -38,9 +38,12 @@ function AddNew( props ) {
       }
 
       const data = await response.json()
-      // TODO: Pass the data.records[0] object to the parent component to update the list state
-      // onAddNew( title )
-      console.log('New:', data)
+      const createdTodo = data.records[0]
+      onAddNew({
+        id: createdTodo.id,
+        title: createdTodo.fields.title,
+        completedAt: createdTodo.fields.completedAt,
+      })
 
       setTitle('')
       setIsLoading(false);

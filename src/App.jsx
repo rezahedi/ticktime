@@ -58,8 +58,8 @@ function App() {
       localStorage.setItem('savedTodoList', JSON.stringify(todoList))
   }, [todoList])
 
-  const addTodo = (newTodo) => {
-    setTodoList((prevData) => [...prevData, {id: Date.now(), title: newTodo} ])
+  const onAddNew = (newTodoObject) => {
+    setTodoList((prevData) => [...prevData, {...newTodoObject} ])
   }
 
   const removeTodo = (id) => {
@@ -70,7 +70,7 @@ function App() {
   return (
     <>
       <h1>Tick Time</h1>
-      <AddNew onAddNew={addTodo} />
+      <AddNew onAddNew={onAddNew} />
       {isLoading && 
         <div style={{display:'flex', flexDirection:'column', gap:'1.7rem'}}>
           <Skeleton />
