@@ -62,7 +62,7 @@ function App() {
     setTodoList((prevData) => [...prevData, {...newTodoObject} ])
   }
 
-  const removeTodo = (id) => {
+  const onRemoveTodo = (id) => {
     const newTodoList = todoList.filter( item => item.id !== id )
     setTodoList( newTodoList )
   }
@@ -80,7 +80,7 @@ function App() {
       }
       {error && <p className='error'>{error}</p>}
       {!error && !isLoading &&
-        <List todoList={todoList} onRemoveTodo={removeTodo} />
+        <List todoList={todoList} onRemoveTodo={onRemoveTodo} />
       }
     </>
   )
