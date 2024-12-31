@@ -14,7 +14,8 @@ function AddNew( props ) {
     // Make optimistic UI rendering about adding the new todo
     const newTodoOptimisticObject = {
       id: Date.now(),
-      title: title
+      title: title,
+      temp: true,
     }
     onAddNew(newTodoOptimisticObject)
     setTitle('')
