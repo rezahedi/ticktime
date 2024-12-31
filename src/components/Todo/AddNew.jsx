@@ -3,15 +3,23 @@ import './style.css'
 import InputWithLabel from '../InputWithLabel'
 
 function AddNew( props ) {
-  const { onAddNew } = props
+  const { onAddNew, onRemoveTodo } = props
 
   const [title, setTitle] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+  // const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
 
   const postNewTodo = async () => {
     setError('')
-    setIsLoading(true);
+    // Make optimistic UI rendering about adding the new todo
+    const newTodoOptimisticObject = {
+      id: Date.now(),
+      title: title
+    }
+    onAddNew(newTodoOptimisticObject)
+    setTitle('')
+    // As Optimistic rendering happens instantly, we don't really need a loading indicator
+    // setIsLoading(true);
 
     const options = {
       method: 'POST',
@@ -39,17 +47,21 @@ function AddNew( props ) {
 
       const data = await response.json()
       const createdTodo = data.records[0]
+
+      // Replace the temp todo with the API fetched todo
+      onRemoveTodo( newTodoOptimisticObject.id )
       onAddNew({
         id: createdTodo.id,
         title: createdTodo.fields.title,
         completedAt: createdTodo.fields.completedAt,
       })
 
-      setTitle('')
-      setIsLoading(false);
+      // setIsLoading(false);
 
     } catch (error) {
-      setIsLoading(false)
+      // setIsLoading(false)
+      onRemoveTodo( newTodoOptimisticObject.id )
+      setTitle( newTodoOptimisticObject.title )
       setError("Something went wrong, try again")
       console.error(error)
     }
@@ -72,10 +84,7 @@ function AddNew( props ) {
           Title
         </InputWithLabel>
         <button type="submit">
-          {isLoading
-            ? <div className="loader"></div>
-            : <>Add</>
-          }
+          Add
         </button>
       </form>
       {error && <p className='error'>{error}</p>}

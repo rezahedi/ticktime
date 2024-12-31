@@ -70,7 +70,7 @@ function App() {
   return (
     <>
       <h1>Tick Time</h1>
-      <AddNew onAddNew={onAddNew} />
+      <AddNew onAddNew={onAddNew} onRemoveTodo={onRemoveTodo} />
       {isLoading && 
         <div style={{display:'flex', flexDirection:'column', gap:'1.7rem'}}>
           <Skeleton />
