@@ -11,7 +11,7 @@ function Item( props ) {
     <div className='todo-item'>
       <label>
         <input type="checkbox" />
-        <span>{todoItem.title}</span>
+        <span className={todoItem.temp ? 'italic' : ''}>{todoItem.title}</span>
         <button onClick={handleRemoveClick}>x</button>
       </label>
     </div>

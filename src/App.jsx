@@ -13,22 +13,43 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
 
-  useEffect(() => {
-    const myPromise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve( JSON.parse(localStorage.getItem('savedTodoList')) || [] )
-      }, 2000)
-    })
-    myPromise.then((result) => {
-      setTodoList(result)
+  const fetchData = async () => {
+    setError('')
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
+      },
+      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`,
+    }
+
+    try {
+      const response = await fetch(options.url, options)
+      if ( !response.ok ) {
+        throw new Error(`Error: ${response.status}`)
+      }
+      const data = await response.json()
+
+      const todos = data.records.map((item) => {
+        return {
+          id: item.id,
+          title: item.fields.title,
+          completedAt: item.fields.completedAt,
+        }
+      })
+      setTodoList(todos)
       setIsLoading(false)
-    })
-    
-    myPromise.catch((error) => {
+
+    } catch (error) {
       setIsLoading(false)
-      setError("Something went wrong")
+      setError("Something went wrong with the API")
       console.error(error)
-    })
+    }
+  }
+
+
+  useEffect(() => {
+    fetchData()
   }, [])
 
   useEffect(() => {
@@ -36,11 +57,11 @@ function App() {
       localStorage.setItem('savedTodoList', JSON.stringify(todoList))
   }, [todoList])
 
-  const addTodo = (newTodo) => {
-    setTodoList((prevData) => [...prevData, {id: Date.now(), title: newTodo} ])
+  const onAddNew = (newTodoObject) => {
+    setTodoList((prevData) => [...prevData, {...newTodoObject} ])
   }
 
-  const removeTodo = (id) => {
+  const onRemoveTodo = (id) => {
     const newTodoList = todoList.filter( item => item.id !== id )
     setTodoList( newTodoList )
   }
@@ -48,7 +69,7 @@ function App() {
   return (
     <>
       <h1>Tick Time</h1>
-      <AddNew onAddNew={addTodo} />
+      <AddNew onAddNew={onAddNew} onRemoveTodo={onRemoveTodo} />
       {isLoading && 
         <div style={{display:'flex', flexDirection:'column', gap:'1.7rem'}}>
           <Skeleton />
@@ -58,7 +79,7 @@ function App() {
       }
       {error && <p className='error'>{error}</p>}
       {!error && !isLoading &&
-        <List todoList={todoList} onRemoveTodo={removeTodo} />
+        <List todoList={todoList} onRemoveTodo={onRemoveTodo} />
       }
     </>
   )
