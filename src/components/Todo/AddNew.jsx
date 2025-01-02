@@ -11,7 +11,7 @@ function AddNew( props ) {
 
   const postNewTodo = async () => {
     setError('')
-    // Make optimistic UI rendering about adding the new todo
+    // Make optimistic UI update to show the new todo
     const newTodoOptimisticObject = {
       id: Date.now(),
       title: title,

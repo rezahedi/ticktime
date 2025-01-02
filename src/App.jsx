@@ -14,6 +14,7 @@ function App() {
   const [error, setError] = useState('')
 
   const fetchData = async () => {
+    setError('')
     const options = {
       method: 'GET',
       headers: {
@@ -48,9 +49,7 @@ function App() {
 
 
   useEffect(() => {
-    (async ()=>{
-      await fetchData()
-    })()
+    fetchData()
   }, [])
 
   useEffect(() => {
