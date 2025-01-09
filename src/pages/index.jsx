@@ -65,7 +65,6 @@ const Main = () => {
 
   return (
     <>
-      <h1>Tick Time</h1>
       <Link to="/new">
         <button>Add New</button>
       </Link>
