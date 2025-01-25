@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import List from '../components/Todo/List'
 import AddNew from '../components/Todo/AddNew'
 import Skeleton from '../components/Todo/Skeleton'
-import { Link } from 'react-router-dom'
 import { DataContext } from '../context/DataContext'
 
 const Main = () => {
