@@ -8,12 +8,14 @@ function App() {
   return (
     <>
       <Header />
-      <DataProvider>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/new" element={<New />} />
-        </Routes>
-      </DataProvider>
+      <div className='container'>
+        <DataProvider>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/new" element={<New />} />
+          </Routes>
+        </DataProvider>
+      </div>
       <Footer />
     </>
   )
