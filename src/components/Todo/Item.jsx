@@ -22,7 +22,7 @@ const calculateRemainedDays = (date) => {
 function Item( props ) {
   const { todoItem, onRemoveTodo } = props
   const days = calculateRemainedDays(todoItem.deadline)
-  const deadlineMessage = days > 0 ? `${days} days remained` : `${days} days passed`
+  const deadlineMessage = days > 0 ? `${days} days remained` : `${Math.abs(days)} days passed`
 
 
   const handleRemoveClick = () => {
