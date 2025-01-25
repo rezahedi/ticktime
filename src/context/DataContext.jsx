@@ -19,7 +19,7 @@ export const DataProvider = ({ children }) => {
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
       },
-      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`,
+      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?sort[0][field]=completedAt&sort[0][direction]=asc&sort[1][field]=deadline&sort[1][direction]=asc`,
     }
 
     try {
