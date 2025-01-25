@@ -18,8 +18,24 @@
 .item button{
   padding: 5px 10px;
 }
-
+.completed {
+  text-decoration: line-through;
+}
 .temporary{
   font-style: italic;
   color: lightgray;
+}
+
+.remainedDeadline, .passedDeadline {
+  white-space: nowrap;
+  margin-left:.5rem;
+  font-size: x-small;
+  border-radius: 1rem;
+  padding: .1rem .8rem;
+}
+.remainedDeadline {
+  background-color: #48ff0062;
+}
+.passedDeadline {
+  background-color: #ff191962;
 }
