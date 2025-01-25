@@ -39,8 +39,8 @@ function AddNew({ extended=false, navigateToHome=false }) {
   }
 
   useEffect(() => {
-    console.log('icon', icon, 'deadline', deadline, 'title', title)
-  }, [icon, deadline, title])
+    setIsExtended(title!=='')
+  }, [title])
 
   return (
     <>
