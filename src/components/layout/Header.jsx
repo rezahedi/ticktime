@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 
 const Header = () => {
   return (
-    <header style={{margin: '2rem auto', borderBottom:'1px solid white'}}>
+    <header style={{margin: '2rem auto', width:'100%', borderBottom:'1px solid white'}}>
       <h1>
         <Link to="/">Tick Time</Link>
       </h1>
