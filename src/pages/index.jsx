@@ -1,74 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useContext } from 'react'
 import List from '../components/Todo/List'
 import AddNew from '../components/Todo/AddNew'
 import Skeleton from '../components/Todo/Skeleton'
 import { Link } from 'react-router-dom'
+import { DataContext } from '../context/DataContext'
 
 const Main = () => {
 
-  const [todoList, setTodoList] = useState( [] )
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
-
-  const fetchData = async () => {
-    setError('')
-    const options = {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
-      },
-      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`,
-    }
-
-    try {
-      const response = await fetch(options.url, options)
-      if ( !response.ok ) {
-        throw new Error(`Error: ${response.status}`)
-      }
-      const data = await response.json()
-
-      const todos = data.records.map((item) => {
-        return {
-          id: item.id,
-          title: item.fields.title,
-          completedAt: item.fields.completedAt,
-        }
-      })
-      setTodoList(todos)
-      setIsLoading(false)
-
-    } catch (error) {
-      setIsLoading(false)
-      setError("Something went wrong with the API")
-      console.error(error)
-    }
-  }
-
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    if(!isLoading)
-      localStorage.setItem('savedTodoList', JSON.stringify(todoList))
-  }, [todoList])
-
-  const onAddNew = (newTodoObject) => {
-    setTodoList((prevData) => [...prevData, {...newTodoObject} ])
-  }
-
-  const onRemoveTodo = (id) => {
-    const newTodoList = todoList.filter( item => item.id !== id )
-    setTodoList( newTodoList )
-  }
+  const {todoList, isLoading, error, onRemoveTodo} = useContext(DataContext)
 
   return (
     <>
       <Link to="/new">
         <button>Add New</button>
       </Link>
-      <AddNew onAddNew={onAddNew} onRemoveTodo={onRemoveTodo} />
+      <AddNew navigateToHome={false} />
       {isLoading && 
         <div style={{display:'flex', flexDirection:'column', gap:'1.7rem'}}>
           <Skeleton />
@@ -77,7 +23,7 @@ const Main = () => {
         </div>
       }
       {error && <p className='error'>{error}</p>}
-      {!error && !isLoading &&
+      {!isLoading &&
         <List todoList={todoList} onRemoveTodo={onRemoveTodo} />
       }
     </>

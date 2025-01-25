@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
+import AddNew from '../components/Todo/AddNew'
 
 const New = () => {
   return (
     <>
       <Link to="/">Back to Main</Link>
-      <div>New Todo form</div>
+      <AddNew navigateToHome />
     </>
   )
 }

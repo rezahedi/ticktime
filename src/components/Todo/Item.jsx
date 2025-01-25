@@ -4,7 +4,7 @@ function Item( props ) {
   const { todoItem, onRemoveTodo } = props
 
   const handleRemoveClick = () => {
-    onRemoveTodo(todoItem.id)
+    onRemoveTodo(todoItem)
   }
   
   return (
