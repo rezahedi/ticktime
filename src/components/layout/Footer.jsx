@@ -1,7 +1,7 @@
 
 const Footer = () => {
   return (
-    <footer>
+    <footer style={{margin: '2rem auto'}}>
       <i>Take control of your time with good habits!</i>
     </footer>
   )

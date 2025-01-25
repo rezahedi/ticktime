@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import './Skeleton.css'
+import styles from './Skeleton.module.css'
 
 export default function Skeleton({
   width = 'auto',
@@ -7,7 +7,7 @@ export default function Skeleton({
 }) {
   return (
     <div style={{width, height}}>
-      <div className='loading-skeleton'></div>
+      <div className={styles.skeleton}></div>
     </div>
   )
 }

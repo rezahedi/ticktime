@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import './style.css'
+import styles from './AddNew.module.css'
 import InputWithLabel from '../InputWithLabel'
 import { DataContext } from '../../context/DataContext'
 import { useNavigate } from 'react-router-dom'
@@ -30,7 +30,7 @@ function AddNew({ navigateToHome }) {
 
   return (
     <>
-      <form className="add-new" onSubmit={handleFormSubmission}>
+      <form className={styles.form} onSubmit={handleFormSubmission}>
         <InputWithLabel title={title} handleTitleChange={handleTitleChange}>
           Title
         </InputWithLabel>
