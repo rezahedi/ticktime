@@ -1,16 +1,25 @@
-.item {
-  margin-bottom:.5rem
-}
-.item label{
+.item{
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: .5rem;
+  background-color: #131314;
+  border-radius: 1rem;
+  padding: .5rem;
+  border: 2px solid transparent
 }
-.item label span{
+.item:hover{
+  border-color: #646cff
+}
+.item span{
   flex-grow: 1;
 }
 .item button{
   padding: 5px 10px;
+}
+
+.temporary{
+  font-style: italic;
+  color: lightgray;
 }

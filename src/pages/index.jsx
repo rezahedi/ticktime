@@ -11,9 +11,6 @@ const Main = () => {
 
   return (
     <>
-      <Link to="/new">
-        <button>Add New</button>
-      </Link>
       <AddNew navigateToHome={false} />
       {isLoading && 
         <div style={{display:'flex', flexDirection:'column', gap:'1.7rem'}}>

@@ -1,10 +1,11 @@
 import Item from "./Item";
+import styles from './List.module.css'
 
 function List( props ) {
   const { todoList, onRemoveTodo } = props
 
   return (
-    <div>
+    <div className={styles.list}>
       {todoList.map(item => (
         <Item key={item.id} todoItem={item} onRemoveTodo={onRemoveTodo} />
       ))}

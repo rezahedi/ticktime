@@ -34,6 +34,8 @@ export const DataProvider = ({ children }) => {
           id: item.id,
           title: item.fields.title,
           completedAt: item.fields.completedAt,
+          icon: item.fields.icon,
+          deadline: item.fields.deadline,
         }
       })
       setTodoList(todos)
@@ -75,11 +77,11 @@ export const DataProvider = ({ children }) => {
     }
   }
 
-  const onAddNew = async (todoTitle) => {
+  const onAddNew = async (todo) => {
     // Make optimistic UI update to show the new todo
     const newTodoOptimisticObject = {
       id: Date.now(),
-      title: todoTitle,
+      ...todo,
       temp: true,
     }
     setTodoList((prevData) => [{...newTodoOptimisticObject}, ...prevData ])
@@ -95,9 +97,7 @@ export const DataProvider = ({ children }) => {
     // Create the new Todo's object in fetch's body payload
     options.body = JSON.stringify({
       records: [{
-        fields: {
-          title: todoTitle,
-        }
+        fields: todo
       }]
     })
 
@@ -114,7 +114,7 @@ export const DataProvider = ({ children }) => {
       const newTodoList = todoList.filter( item => item.id !== newTodoOptimisticObject.id )
       setTodoList( newTodoList )
       // Add real one
-      setTodoList((prevData) => [{...{...createdTodo, title: createdTodo.fields.title}}, ...prevData ])
+      setTodoList((prevData) => [{id:createdTodo.id, ...createdTodo.fields}, ...prevData ])
 
       return true;
 

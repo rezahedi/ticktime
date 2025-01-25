@@ -3,10 +3,7 @@ import AddNew from '../components/Todo/AddNew'
 
 const New = () => {
   return (
-    <>
-      <Link to="/">Back to Main</Link>
-      <AddNew navigateToHome />
-    </>
+    <AddNew navigateToHome extended />
   )
 }
 

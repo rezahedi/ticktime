@@ -10,11 +10,8 @@ function Item( props ) {
   
   return (
     <div className={styles.item}>
-      <label>
-        <input type="checkbox" />
-        <span className={todoItem.temp ? 'italic' : ''}>{todoItem.title}</span>
-        <button onClick={handleRemoveClick}>x</button>
-      </label>
+      <span className={todoItem.temp ? styles.temporary : ''}>{todoItem.icon} {todoItem.title}</span>
+      <button onClick={handleRemoveClick}>x</button>
     </div>
   )
 }
