@@ -39,7 +39,7 @@ function AddNew({ extended=false, navigateToHome=false }) {
   }
 
   useEffect(() => {
-    setIsExtended(title!=='')
+    setIsExtended(title!=='' || extended)
   }, [title])
 
   return (
