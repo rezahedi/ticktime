@@ -7,7 +7,7 @@ import SelectIcon from './SelectIcon'
 
 // eslint-disable-next-line react/prop-types
 function AddNew({ extended=false, navigateToHome=false }) {
-  const {onAddNew} = useContext(DataContext)
+  const {onAddNew, onAddError} = useContext(DataContext)
   const navigate = useNavigate()
 
   const todayDate = new Date().toLocaleDateString('en-CA');
@@ -20,17 +20,17 @@ function AddNew({ extended=false, navigateToHome=false }) {
 
   const handleFormSubmission = async (e) => {
     e.preventDefault()
-    setTitle(prev => '')
     const res = await onAddNew({
       title,
       icon,
       deadline,
     })
-    if(!res)
-      setTitle(prev => title)
+    if(res) {
+      setTitle('')
+      if(navigateToHome)
+        navigate('/')
+    }
 
-    if(navigateToHome)
-      navigate('/')
   }
 
   const handleTitleChange = (e) => {
@@ -64,7 +64,7 @@ function AddNew({ extended=false, navigateToHome=false }) {
           </label>
         </div>}
       </form>
-      {/* {error && <p className='error'>{error}</p>} */}
+      {onAddError && <p className='error'>{onAddError}</p>}
     </>
   )
 }

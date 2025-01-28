@@ -6,6 +6,7 @@ export const DataProvider = ({ children }) => {
   const [todoList, setTodoList] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [onAddError, setOnAddError] = useState('')
 
   useEffect(() => {
     localStorage.setItem('savedTodoList', JSON.stringify(todoList))
@@ -78,6 +79,7 @@ export const DataProvider = ({ children }) => {
   }
 
   const onAddNew = async (todo) => {
+    setOnAddError('')
     // Make optimistic UI update to show the new todo
     const newTodoOptimisticObject = {
       id: Date.now(),
@@ -122,7 +124,7 @@ export const DataProvider = ({ children }) => {
       // Remove optimistic
       const newTodoList = todoList.filter( item => item.id !== newTodoOptimisticObject.id )
       setTodoList( newTodoList )
-      setError("Something went wrong, try again")
+      setOnAddError("Something went wrong, try again")
       console.error(error)
       
       return false;
@@ -134,7 +136,7 @@ export const DataProvider = ({ children }) => {
   }, [])
 
   return (
-    <DataContext.Provider value={{todoList, isLoading, error, onRemoveTodo, onAddNew}}>
+    <DataContext.Provider value={{todoList, isLoading, error, onRemoveTodo, onAddNew, onAddError}}>
       {children}
     </DataContext.Provider>
   )
