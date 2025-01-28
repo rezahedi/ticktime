@@ -1,76 +1,36 @@
-import { useState } from 'react'
-import './style.css'
+import { useState, useContext, useEffect } from 'react'
+import styles from './AddNew.module.css'
 import InputWithLabel from '../InputWithLabel'
+import { DataContext } from '../../context/DataContext'
+import { useNavigate } from 'react-router-dom'
+import SelectIcon from './SelectIcon'
 
-function AddNew( props ) {
-  const { onAddNew, onRemoveTodo } = props
+// eslint-disable-next-line react/prop-types
+function AddNew({ extended=false, navigateToHome=false }) {
+  const {onAddNew, onAddError} = useContext(DataContext)
+  const navigate = useNavigate()
 
+  const todayDate = new Date().toLocaleDateString('en-CA');
   const [title, setTitle] = useState('')
+  const [icon, setIcon] = useState('')
+  const [deadline, setDeadline] = useState(todayDate)
+  const [isExtended, setIsExtended] = useState(extended)
   // const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  const postNewTodo = async () => {
-    setError('')
-    // Make optimistic UI update to show the new todo
-    const newTodoOptimisticObject = {
-      id: Date.now(),
-      title: title,
-      temp: true,
-    }
-    onAddNew(newTodoOptimisticObject)
-    setTitle('')
-    // As Optimistic rendering happens instantly, we don't really need a loading indicator
-    // setIsLoading(true);
-
-    const options = {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`,
-    }
-
-    // Create the new Todo's object in fetch's body payload
-    options.body = JSON.stringify({
-      records: [{
-        fields: {
-          title: title,
-        }
-      }]
-    })
-
-    try {
-      const response = await fetch(options.url, options)
-      if ( !response.ok ) {
-        throw new Error(`Error: ${response.status}`)
-      }
-
-      const data = await response.json()
-      const createdTodo = data.records[0]
-
-      // Replace the temp todo with the API fetched todo
-      onRemoveTodo( newTodoOptimisticObject.id )
-      onAddNew({
-        id: createdTodo.id,
-        title: createdTodo.fields.title,
-        completedAt: createdTodo.fields.completedAt,
-      })
-
-      // setIsLoading(false);
-
-    } catch (error) {
-      // setIsLoading(false)
-      onRemoveTodo( newTodoOptimisticObject.id )
-      setTitle( newTodoOptimisticObject.title )
-      setError("Something went wrong, try again")
-      console.error(error)
-    }
-  }
+  // const [error, setError] = useState('')
 
   const handleFormSubmission = async (e) => {
     e.preventDefault()
-    await postNewTodo()
+    const res = await onAddNew({
+      title,
+      icon,
+      deadline,
+    })
+    if(res) {
+      setTitle('')
+      if(navigateToHome)
+        navigate('/')
+    }
+
   }
 
   const handleTitleChange = (e) => {
@@ -78,17 +38,33 @@ function AddNew( props ) {
     setTitle( newTodoTitle )
   }
 
+  useEffect(() => {
+    setIsExtended(title!=='' || extended)
+  }, [title])
+
   return (
     <>
-      <form className="add-new" onSubmit={handleFormSubmission}>
-        <InputWithLabel title={title} handleTitleChange={handleTitleChange}>
-          Title
-        </InputWithLabel>
-        <button type="submit">
-          Add
-        </button>
+      <form className={styles.form} onSubmit={handleFormSubmission} onClick={()=>setIsExtended(true)}>
+        <div className={styles.mainRow}>
+          <InputWithLabel title={title} handleTitleChange={handleTitleChange}>
+            Title
+          </InputWithLabel>
+          <button type="submit">
+            Add
+          </button>
+        </div>
+        {isExtended && <div className={styles.extention}>
+          <label>
+            Icon
+            <SelectIcon setIcon={setIcon} />
+          </label>
+          <label>
+            Complete by
+            <input name='deadline' defaultValue={todayDate} type='date' onChange={(e) => setDeadline(e.target.value)} />
+          </label>
+        </div>}
       </form>
-      {error && <p className='error'>{error}</p>}
+      {onAddError && <p className='error'>{onAddError}</p>}
     </>
   )
 }
