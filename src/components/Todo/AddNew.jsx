@@ -4,8 +4,8 @@ import InputWithLabel from '../InputWithLabel'
 import { DataContext } from '../../context/DataContext'
 import { useNavigate } from 'react-router-dom'
 import SelectIcon from './SelectIcon'
+import PropTypes from 'prop-types'
 
-// eslint-disable-next-line react/prop-types
 function AddNew({ extended=false, navigateToHome=false }) {
   const {onAddNew, onAddError} = useContext(DataContext)
   const navigate = useNavigate()
@@ -67,6 +67,10 @@ function AddNew({ extended=false, navigateToHome=false }) {
       {onAddError && <p className='error'>{onAddError}</p>}
     </>
   )
+}
+AddNew.propTypes = {
+  extended: PropTypes.bool,
+  navigateToHome: PropTypes.bool,
 }
 
 export default AddNew

@@ -82,7 +82,7 @@ export const DataProvider = ({ children }) => {
     setOnAddError('')
     // Make optimistic UI update to show the new todo
     const newTodoOptimisticObject = {
-      id: Date.now(),
+      id: Date.now().toString(),
       ...todo,
       temp: true,
     }

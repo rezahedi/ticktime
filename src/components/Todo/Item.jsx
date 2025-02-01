@@ -1,4 +1,6 @@
 import styles from './Item.module.css'
+import PropTypes from 'prop-types'
+import { todoObjType } from '../../propTypes'
 
 const convertDateFormat = (date) => {
   const [year, month, day] = date.split('-')
@@ -18,9 +20,7 @@ const calculateRemainedDays = (date) => {
   return differenceInDays
 }
 
-/* eslint-disable react/prop-types */
-function Item( props ) {
-  const { todoItem, onRemoveTodo } = props
+function Item({ todoItem, onRemoveTodo }) {
   const days = calculateRemainedDays(todoItem.deadline)
   const deadlineMessage = days > 0 ? `${days} days remained` : `${Math.abs(days)} days passed`
 
@@ -44,5 +44,8 @@ function Item( props ) {
     </div>
   )
 }
-
+Item.propTypes = {
+  todoItem: PropTypes.shape(todoObjType).isRequired,
+  onRemoveTodo: PropTypes.func.isRequired
+}
 export default Item

@@ -1,8 +1,9 @@
 import Item from "./Item";
 import styles from './List.module.css'
+import PropTypes from "prop-types";
+import { todoObjType } from "../../propTypes";
 
-function List( props ) {
-  const { todoList, onRemoveTodo } = props
+function List({ todoList, onRemoveTodo }) {
 
   return (
     <div className={styles.list}>
@@ -12,6 +13,10 @@ function List( props ) {
       {todoList.length === 0 && <p className='empty-list'>No Todos, Yay!</p>}
     </div>
   )
+}
+List.propTypes = {
+  todoList: PropTypes.arrayOf(PropTypes.shape(todoObjType)).isRequired,
+  onRemoveTodo: PropTypes.func.isRequired
 }
 
 export default List

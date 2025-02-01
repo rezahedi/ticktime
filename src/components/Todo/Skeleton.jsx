@@ -1,5 +1,5 @@
-/* eslint-disable react/prop-types */
 import styles from './Skeleton.module.css'
+import PropTypes from 'prop-types'
 
 export default function Skeleton({
   width = 'auto',
@@ -10,4 +10,8 @@ export default function Skeleton({
       <div className={styles.skeleton}></div>
     </div>
   )
+}
+Skeleton.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
 }

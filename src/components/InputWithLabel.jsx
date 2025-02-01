@@ -1,8 +1,7 @@
 import { useRef, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
-
-export default function InputWithLabel(props) {
-  const { children, title, handleTitleChange } = props;
+export default function InputWithLabel({ children, title, handleTitleChange }) {
   const inputRef = useRef(null)
 
   useEffect(() => {
@@ -23,4 +22,9 @@ export default function InputWithLabel(props) {
       />
     </>
   )
+}
+InputWithLabel.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  handleTitleChange: PropTypes.func.isRequired,
 }

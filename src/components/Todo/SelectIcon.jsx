@@ -9,6 +9,8 @@ const ICONS = [
   '📖',
   '👨‍🏫',
 ]
+import PropTypes from 'prop-types'
+
 function SelectIcon({ setIcon }) {
   useEffect(() => {
     setIcon(ICONS[0])
@@ -23,6 +25,9 @@ function SelectIcon({ setIcon }) {
       {ICONS.map(i => <option key={i} value={i}>{i}</option>)}
     </select>
   )
+}
+SelectIcon.propTypes = {
+  setIcon: PropTypes.func.isRequired
 }
 
 export default SelectIcon
