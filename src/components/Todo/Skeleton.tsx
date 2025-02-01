@@ -1,17 +1,17 @@
 import styles from './Skeleton.module.css'
-import PropTypes from 'prop-types'
+
+interface SkeletonProps {
+  width?: string,
+  height?: string,
+}
 
 export default function Skeleton({
   width = 'auto',
   height = 'auto'
-}) {
+}: SkeletonProps) {
   return (
     <div style={{width, height}}>
       <div className={styles.skeleton}></div>
     </div>
   )
-}
-Skeleton.propTypes = {
-  width: PropTypes.string,
-  height: PropTypes.string,
 }

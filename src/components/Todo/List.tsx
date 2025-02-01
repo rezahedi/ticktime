@@ -1,9 +1,13 @@
 import Item from "./Item";
 import styles from './List.module.css'
-import PropTypes from "prop-types";
-import { todoObjType } from "../../propTypes";
+import { TodoProps } from "../../lib/types";
 
-function List({ todoList, onRemoveTodo }) {
+interface ListProps {
+  todoList: TodoProps[],
+  onRemoveTodo: (todo: TodoProps) => Promise<void>,
+}
+
+function List({ todoList, onRemoveTodo }: ListProps) {
 
   return (
     <div className={styles.list}>
@@ -13,10 +17,6 @@ function List({ todoList, onRemoveTodo }) {
       {todoList.length === 0 && <p className='empty-list'>No Todos, Yay!</p>}
     </div>
   )
-}
-List.propTypes = {
-  todoList: PropTypes.arrayOf(PropTypes.shape(todoObjType)).isRequired,
-  onRemoveTodo: PropTypes.func.isRequired
 }
 
 export default List

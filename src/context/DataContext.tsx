@@ -1,12 +1,22 @@
-import { useEffect, createContext, useState } from "react";
+import { useEffect, createContext, useState, useContext } from "react";
+import { AirTableDefaultType, NewTodoProps, TodoProps } from "../lib/types";
 
-export const DataContext = createContext();
+interface DataContextType {
+  todoList: TodoProps[],
+  isLoading: boolean,
+  error: string,
+  onRemoveTodo: (todo: TodoProps) => Promise<void>,
+  onAddNew: (todo: NewTodoProps) => Promise<boolean>,
+  onAddError: string,
+}
 
-export const DataProvider = ({ children }) => {
-  const [todoList, setTodoList] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [onAddError, setOnAddError] = useState('')
+export const DataContext = createContext<DataContextType | undefined>(undefined)
+
+export const DataProvider = ({ children }: { children: React.ReactNode }) => {
+  const [todoList, setTodoList] = useState<TodoProps[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
+  const [onAddError, setOnAddError] = useState<string>('')
 
   useEffect(() => {
     localStorage.setItem('savedTodoList', JSON.stringify(todoList))
@@ -20,17 +30,17 @@ export const DataProvider = ({ children }) => {
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
       },
-      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?sort[0][field]=completedAt&sort[0][direction]=asc&sort[1][field]=deadline&sort[1][direction]=asc`,
     }
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?sort[0][field]=completedAt&sort[0][direction]=asc&sort[1][field]=deadline&sort[1][direction]=asc`
 
     try {
-      const response = await fetch(options.url, options)
+      const response = await fetch(url, options)
       if ( !response.ok ) {
         throw new Error(`Error: ${response.status}`)
       }
       const data = await response.json()
 
-      const todos = data.records.map((item) => {
+      const todos = data.records.map((item: AirTableDefaultType) => {
         return {
           id: item.id,
           title: item.fields.title,
@@ -49,7 +59,7 @@ export const DataProvider = ({ children }) => {
     }
   }
 
-  const onRemoveTodo = async (todo) => {
+  const onRemoveTodo = async (todo: TodoProps) => {
     const backupTodoList = todoList
     // Optimistic remove from UI
     const newTodoList = todoList.filter( item => item.id !== todo.id )
@@ -60,11 +70,11 @@ export const DataProvider = ({ children }) => {
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
       },
-      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?records[]=${todo.id}`,
     }
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?records[]=${todo.id}`
 
     try {
-      const response = await fetch(options.url, options)
+      const response = await fetch(url, options)
       if ( !response.ok ) {
         throw new Error(`Error: ${response.status}`)
       }
@@ -78,7 +88,7 @@ export const DataProvider = ({ children }) => {
     }
   }
 
-  const onAddNew = async (todo) => {
+  const onAddNew = async (todo: NewTodoProps) => {
     setOnAddError('')
     // Make optimistic UI update to show the new todo
     const newTodoOptimisticObject = {
@@ -93,18 +103,17 @@ export const DataProvider = ({ children }) => {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
         'Content-Type': 'application/json',
       },
-      url: `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`,
+      // Create the new Todo's object in fetch's body payload
+      body: JSON.stringify({
+        records: [{
+          fields: todo
+        }]
+      }),
     }
-
-    // Create the new Todo's object in fetch's body payload
-    options.body = JSON.stringify({
-      records: [{
-        fields: todo
-      }]
-    })
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`
 
     try {
-      const response = await fetch(options.url, options)
+      const response = await fetch(url, options)
       if ( !response.ok ) {
         throw new Error(`Error: ${response.status}`)
       }
@@ -140,4 +149,12 @@ export const DataProvider = ({ children }) => {
       {children}
     </DataContext.Provider>
   )
+}
+
+export const useData = (): DataContextType => {
+  const context = useContext(DataContext)
+  if (context === undefined) {
+    throw new Error('useData must be used within a DataProvider')
+  }
+  return context
 }

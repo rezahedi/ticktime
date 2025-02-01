@@ -1,26 +1,29 @@
 import styles from './Item.module.css'
-import PropTypes from 'prop-types'
-import { todoObjType } from '../../propTypes'
+import { TodoProps } from "../../lib/types";
 
-const convertDateFormat = (date) => {
+const convertDateFormat = (date: string): string => {
   const [year, month, day] = date.split('-')
   return `${month}/${day}/${year}`
 }
 
 /**
- * 
  * @param {string} date format 'mm/dd/yyyy'
  * @returns number
  */
-const calculateRemainedDays = (date) => {
-  const inputDate = new Date( convertDateFormat(date) + ' 11:59:59' )
-  const currentDate = new Date()
-  const differenceInMs = inputDate - currentDate
-  const differenceInDays = Math.round(differenceInMs / (24 * 60 * 60 * 1000));
+const calculateRemainedDays = (date: string): number => {
+  const inputDate: Date = new Date( convertDateFormat(date) + ' 11:59:59' )
+  const currentDate: Date = new Date()
+  const differenceInMs: number = inputDate.getTime() - currentDate.getTime()
+  const differenceInDays: number = Math.round(differenceInMs / (24 * 60 * 60 * 1000));
   return differenceInDays
 }
 
-function Item({ todoItem, onRemoveTodo }) {
+interface ItemProps {
+  todoItem: TodoProps,
+  onRemoveTodo: (todo: TodoProps) => Promise<void>,
+}
+
+function Item({ todoItem, onRemoveTodo }: ItemProps) {
   const days = calculateRemainedDays(todoItem.deadline)
   const deadlineMessage = days > 0 ? `${days} days remained` : `${Math.abs(days)} days passed`
 
@@ -44,8 +47,5 @@ function Item({ todoItem, onRemoveTodo }) {
     </div>
   )
 }
-Item.propTypes = {
-  todoItem: PropTypes.shape(todoObjType).isRequired,
-  onRemoveTodo: PropTypes.func.isRequired
-}
+
 export default Item

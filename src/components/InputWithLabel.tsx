@@ -1,11 +1,16 @@
 import { useRef, useEffect } from 'react'
-import PropTypes from 'prop-types'
 
-export default function InputWithLabel({ children, title, handleTitleChange }) {
-  const inputRef = useRef(null)
+interface InputWithLabelProps {
+  children: React.ReactNode,
+  title: string,
+  handleTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}
+
+export default function InputWithLabel({ children, title, handleTitleChange }: InputWithLabelProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if( inputRef?.current )
+    if( inputRef.current )
       inputRef.current.focus()
   })
 
@@ -22,9 +27,4 @@ export default function InputWithLabel({ children, title, handleTitleChange }) {
       />
     </>
   )
-}
-InputWithLabel.propTypes = {
-  children: PropTypes.node.isRequired,
-  title: PropTypes.string.isRequired,
-  handleTitleChange: PropTypes.func.isRequired,
 }
