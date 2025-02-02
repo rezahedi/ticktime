@@ -1,8 +1,13 @@
 import Item from "./Item";
 import styles from './List.module.css'
+import { TodoProps } from "../../lib/types";
 
-function List( props ) {
-  const { todoList, onRemoveTodo } = props
+interface ListProps {
+  todoList: TodoProps[],
+  onRemoveTodo: (todo: TodoProps) => Promise<void>,
+}
+
+function List({ todoList, onRemoveTodo }: ListProps) {
 
   return (
     <div className={styles.list}>

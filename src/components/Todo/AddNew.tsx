@@ -1,13 +1,17 @@
-import { useState, useContext, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import styles from './AddNew.module.css'
 import InputWithLabel from '../InputWithLabel'
-import { DataContext } from '../../context/DataContext'
+import { useData } from '../../context/DataContext'
 import { useNavigate } from 'react-router-dom'
 import SelectIcon from './SelectIcon'
 
-// eslint-disable-next-line react/prop-types
-function AddNew({ extended=false, navigateToHome=false }) {
-  const {onAddNew, onAddError} = useContext(DataContext)
+interface AddNewProps {
+  extended?: boolean,
+  navigateToHome?: boolean,
+}
+
+function AddNew({ extended=false, navigateToHome=false }: AddNewProps) {
+  const {onAddNew, onAddError} = useData()
   const navigate = useNavigate()
 
   const todayDate = new Date().toLocaleDateString('en-CA');
@@ -18,7 +22,7 @@ function AddNew({ extended=false, navigateToHome=false }) {
   // const [isLoading, setIsLoading] = useState(false)
   // const [error, setError] = useState('')
 
-  const handleFormSubmission = async (e) => {
+  const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const res = await onAddNew({
       title,
@@ -33,9 +37,8 @@ function AddNew({ extended=false, navigateToHome=false }) {
 
   }
 
-  const handleTitleChange = (e) => {
-    const newTodoTitle = e.target.value
-    setTitle( newTodoTitle )
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle( e.target.value )
   }
 
   useEffect(() => {

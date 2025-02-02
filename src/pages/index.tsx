@@ -1,12 +1,11 @@
-import { useContext } from 'react'
 import List from '../components/Todo/List'
 import AddNew from '../components/Todo/AddNew'
 import Skeleton from '../components/Todo/Skeleton'
-import { DataContext } from '../context/DataContext'
+import { useData } from '../context/DataContext'
 
 const Main = () => {
 
-  const {todoList, isLoading, error, onRemoveTodo} = useContext(DataContext)
+  const {todoList, isLoading, error, onRemoveTodo} = useData()
 
   return (
     <>
