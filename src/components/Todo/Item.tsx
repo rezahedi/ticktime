@@ -10,9 +10,15 @@ const convertDateFormat = (date: string): string => {
  * @param {string} date format 'mm/dd/yyyy'
  * @returns number
  */
-const calculateRemainedDays = (date: string): number => {
-  const inputDate: Date = new Date( convertDateFormat(date) + ' 11:59:59' )
+export const calculateRemainedDays = (date: string): number => {
   const currentDate: Date = new Date()
+  const inputDate: Date = new Date( convertDateFormat(date) + ' 11:59:59' )
+
+  // Check if the date is valid
+  if (isNaN(inputDate.getTime())) {
+    return 0;
+  }
+  
   const differenceInMs: number = inputDate.getTime() - currentDate.getTime()
   const differenceInDays: number = Math.round(differenceInMs / (24 * 60 * 60 * 1000));
   return differenceInDays
