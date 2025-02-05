@@ -1,7 +1,14 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll, vi } from "vitest";
 import { calculateRemainedDays } from "./components/Todo/Item"
 
 describe("calculateRemainedDays", () => {
+
+  // Mock the current date to 02/03/2025
+  beforeAll(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("02/03/2025"))
+  })
+  
   it("Expect to return 10 that means 10 days remained", () => {
     expect(calculateRemainedDays("2/13/2025")).toBe(10)
   });
