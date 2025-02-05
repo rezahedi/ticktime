@@ -56,7 +56,13 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
           deadline: item.fields.deadline,
         }
       })
-      setTodoList(todos)
+      setTodoList( todos.sort(
+        (a: TodoProps, b: TodoProps) => {
+          if ( a.title < b.title ) return -1
+          if ( a.title > b.title ) return 1
+          return 0
+        }
+      ) )
       setIsLoading(false)
 
     } catch (error) {
