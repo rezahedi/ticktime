@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import styles from './SelectIcon.module.css'
-const ICONS = [
+const ICONS: string[] = [
   '🏃‍➡️',
   '🎉',
   '🍵',
@@ -9,12 +9,17 @@ const ICONS = [
   '📖',
   '👨‍🏫',
 ]
-function SelectIcon({ setIcon }) {
+
+interface SelectIconProps {
+  setIcon: (icon: string) => void,
+}
+
+function SelectIcon({ setIcon }: SelectIconProps) {
   useEffect(() => {
     setIcon(ICONS[0])
   }, [])
 
-  const handleSelectIcon = (e) => {
+  const handleSelectIcon = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setIcon(e.target.value)
   }
 

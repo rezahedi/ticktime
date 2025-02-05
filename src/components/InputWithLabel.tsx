@@ -1,12 +1,16 @@
 import { useRef, useEffect } from 'react'
 
+interface InputWithLabelProps {
+  children: React.ReactNode,
+  title: string,
+  handleTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+}
 
-export default function InputWithLabel(props) {
-  const { children, title, handleTitleChange } = props;
-  const inputRef = useRef(null)
+export default function InputWithLabel({ children, title, handleTitleChange }: InputWithLabelProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if( inputRef?.current )
+    if( inputRef.current )
       inputRef.current.focus()
   })
 

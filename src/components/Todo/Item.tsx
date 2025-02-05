@@ -1,26 +1,35 @@
 import styles from './Item.module.css'
+import { TodoProps } from "../../lib/types";
 
-const convertDateFormat = (date) => {
+const convertDateFormat = (date: string): string => {
   const [year, month, day] = date.split('-')
   return `${month}/${day}/${year}`
 }
 
 /**
- * 
  * @param {string} date format 'mm/dd/yyyy'
  * @returns number
  */
-const calculateRemainedDays = (date) => {
-  const inputDate = new Date( convertDateFormat(date) + ' 11:59:59' )
-  const currentDate = new Date()
-  const differenceInMs = inputDate - currentDate
-  const differenceInDays = Math.round(differenceInMs / (24 * 60 * 60 * 1000));
+export const calculateRemainedDays = (date: string): number => {
+  const currentDate: Date = new Date()
+  const inputDate: Date = new Date( convertDateFormat(date) + ' 11:59:59' )
+
+  // Check if the date is valid
+  if (isNaN(inputDate.getTime())) {
+    return 0;
+  }
+  
+  const differenceInMs: number = inputDate.getTime() - currentDate.getTime()
+  const differenceInDays: number = Math.round(differenceInMs / (24 * 60 * 60 * 1000));
   return differenceInDays
 }
 
-/* eslint-disable react/prop-types */
-function Item( props ) {
-  const { todoItem, onRemoveTodo } = props
+interface ItemProps {
+  todoItem: TodoProps,
+  onRemoveTodo: (todo: TodoProps) => Promise<void>,
+}
+
+function Item({ todoItem, onRemoveTodo }: ItemProps) {
   const days = calculateRemainedDays(todoItem.deadline)
   const deadlineMessage = days > 0 ? `${days} days remained` : `${Math.abs(days)} days passed`
 
