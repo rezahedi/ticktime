@@ -14,7 +14,7 @@ function List({ todoList, onRemoveTodo }: ListProps) {
     <>
       <div className={styles.sortButtons}>
         <Sort title='Title' />
-        <Sort title=' Date' />
+        <Sort title='Deadline' />
       </div>
       <div className={styles.list}>
         {todoList.map(item => (
