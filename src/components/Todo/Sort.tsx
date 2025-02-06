@@ -1,5 +1,7 @@
 import styles from './Sort.module.css'
 import { useSearchParams } from 'react-router-dom'
+import { useData } from '../../context/DataContext'
+import { useEffect } from 'react'
 
 interface SortProps {
   title: string,
@@ -10,6 +12,7 @@ const Sort = (props: SortProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sort = searchParams.get('sort') || ''
   const [ field, order ] = sort.split(',')
+  const { todoList, setSort } = useData()
 
   const isActive = field.toLocaleLowerCase() === title.toLocaleLowerCase()
   const isAscending = order === 'asc'
@@ -22,6 +25,11 @@ const Sort = (props: SortProps) => {
       setSearchParams({ sort: `${title.toLocaleLowerCase()},asc` })
     }
   }
+
+  useEffect(() => {
+    if (todoList.length === 0) return
+    setSort(field, order)
+  }, [field, order])
 
   return (
     <button className={isActive ? styles.btnActive :  styles.btn} onClick={handleClick}>

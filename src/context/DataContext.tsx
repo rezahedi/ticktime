@@ -8,6 +8,7 @@ interface DataContextType {
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
   onAddNew: (todo: NewTodoProps) => Promise<boolean>,
   onAddError: string,
+  setSort: (field: string, order: string) => void,
 }
 
 export const DataContext = createContext<DataContextType | undefined>(undefined)
@@ -69,6 +70,23 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       setIsLoading(false)
       setError("Something went wrong with the API")
       console.error(error)
+    }
+  }
+
+  const setSort = (field: string, order: string) => {
+    if( field === 'title' ) {
+      setTodoList( [...todoList.sort((a: TodoProps, b: TodoProps) => {
+        if( a.title < b.title ) return (order==='asc' ? -1 : 1)
+        if( a.title > b.title ) return (order==='asc' ? 1 : -1)
+        return 0
+      })] )
+    }
+    if( field === 'deadline' ) {
+      setTodoList( [...todoList.sort((a: TodoProps, b: TodoProps) => {
+        if( a.deadline < b.deadline ) return (order==='asc' ? -1 : 1)
+        if( a.deadline > b.deadline ) return (order==='asc' ? 1 : -1)
+        return 0
+      })] )
     }
   }
 
@@ -158,7 +176,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <DataContext.Provider value={{todoList, isLoading, error, onRemoveTodo, onAddNew, onAddError}}>
+    <DataContext.Provider value={{todoList, isLoading, error, onRemoveTodo, onAddNew, onAddError, setSort}}>
       {children}
     </DataContext.Provider>
   )
