@@ -28,7 +28,9 @@ const Sort = (props: SortProps) => {
 
   useEffect(() => {
     if (todoList.length === 0) return
-    setSort(field, order)
+    if (!field || !order) return
+
+    setSort({field, order})
   }, [field, order])
 
   return (
