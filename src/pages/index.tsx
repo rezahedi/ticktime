@@ -12,9 +12,9 @@ const Main = () => {
       <AddNew navigateToHome={false} />
       {isLoading && 
         <div style={{display:'flex', flexDirection:'column', gap:'1.7rem'}}>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
+          <Skeleton style={{height:'3rem', borderRadius:'1rem'}} />
+          <Skeleton style={{height:'3rem', borderRadius:'1rem'}} />
+          <Skeleton style={{height:'3rem', borderRadius:'1rem'}} />
         </div>
       }
       {error && <p className='error'>{error}</p>}

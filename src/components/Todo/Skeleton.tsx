@@ -1,17 +1,13 @@
 import styles from './Skeleton.module.css'
 
 interface SkeletonProps {
-  width?: string,
-  height?: string,
+  style?: React.CSSProperties,
 }
 
 export default function Skeleton({
-  width = 'auto',
-  height = 'auto'
+  style = {},
 }: SkeletonProps) {
   return (
-    <div style={{width, height}}>
-      <div className={styles.skeleton}></div>
-    </div>
+    <div style={style} className={styles.skeleton}></div>
   )
 }
