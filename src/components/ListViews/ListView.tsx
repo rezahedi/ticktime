@@ -1,5 +1,5 @@
 import Item from "../Todo/Item";
-import styles from './List.module.css'
+import styles from './ListView.module.css'
 import { TodoProps } from "../../lib/types";
 import Sort from "./Sort";
 
@@ -8,7 +8,7 @@ interface ListProps {
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
 }
 
-function List({ todoList, onRemoveTodo }: ListProps) {
+function ListView({ todoList, onRemoveTodo }: ListProps) {
 
   return (
     <>
@@ -26,4 +26,4 @@ function List({ todoList, onRemoveTodo }: ListProps) {
   )
 }
 
-export default List
+export default ListView

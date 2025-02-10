@@ -1,4 +1,4 @@
-import List from '../components/ListViews/List'
+import ListView from '../components/ListViews/ListView'
 import AddNew from '../components/Todo/AddNew'
 import Skeleton from '../components/Todo/Skeleton'
 import { useData } from '../context/DataContext'
@@ -19,7 +19,7 @@ const Main = () => {
       }
       {error && <p className='error'>{error}</p>}
       {!isLoading &&
-        <List todoList={todoList} onRemoveTodo={onRemoveTodo} />
+        <ListView todoList={todoList} onRemoveTodo={onRemoveTodo} />
       }
     </>
   )
