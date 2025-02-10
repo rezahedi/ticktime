@@ -1,4 +1,4 @@
-import List from '../components/Todo/List'
+import List from '../components/ListViews/List'
 import AddNew from '../components/Todo/AddNew'
 import Skeleton from '../components/Todo/Skeleton'
 import { useData } from '../context/DataContext'

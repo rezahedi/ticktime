@@ -1,4 +1,4 @@
-import Item from "./Item";
+import Item from "../Todo/Item";
 import styles from './List.module.css'
 import { TodoProps } from "../../lib/types";
 import Sort from "./Sort";
