@@ -75,10 +75,19 @@ button:focus-visible {
   font-size: 1rem;
   text-align: center;
 }
+nav{
+  display: flex;
+  gap: .5rem;
+}
 nav a{
   padding:.5rem 1rem;
   border-top-left-radius: .5rem;
   border-top-right-radius: .5rem;
+}
+header{
+  width:100%;
+  border-bottom:1px solid white;
+  background-color:#131314;
 }
 header nav a.active{
   color: #242424;
