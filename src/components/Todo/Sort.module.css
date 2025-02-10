@@ -1,0 +1,27 @@
+.btn, .btnActive{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  border: 2px solid gray;
+  border-radius: 1rem;
+  padding: .4rem .8rem;
+  color: gray;
+}
+.btnActive{
+  border-color: #ffffffde;
+  color: #ffffffde;
+}
+.icon{
+  width: .7rem;
+  display: flex;
+  flex-direction: column;
+}
+.active{
+  fill: #ffffffde;
+  stroke: #ffffffde;
+}
+.inactive{
+  fill: none;
+  stroke: #ffffffde;
+}

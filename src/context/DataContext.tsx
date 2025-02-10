@@ -1,5 +1,6 @@
 import { useEffect, createContext, useState, useContext } from "react";
 import { AirTableDefaultType, NewTodoProps, TodoProps } from "../lib/types";
+import { useSearchParams } from 'react-router-dom'
 
 interface DataContextType {
   todoList: TodoProps[],
@@ -8,19 +9,37 @@ interface DataContextType {
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
   onAddNew: (todo: NewTodoProps) => Promise<boolean>,
   onAddError: string,
+  setSort: React.Dispatch<React.SetStateAction<SortType>>,
+}
+
+interface SortType {
+  field: string,
+  order: string,
 }
 
 export const DataContext = createContext<DataContextType | undefined>(undefined)
 
 export const DataProvider = ({ children }: { children: React.ReactNode }) => {
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sortParams = searchParams.get('sort') || ','
+  const [ field, order ] = sortParams.split(',')
+
   const [todoList, setTodoList] = useState<TodoProps[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
   const [onAddError, setOnAddError] = useState<string>('')
+  const [sort, setSort] = useState<SortType>({ field, order })
 
   useEffect(() => {
     localStorage.setItem('savedTodoList', JSON.stringify(todoList))
   }, [todoList])
+
+  useEffect(() => {
+    if (todoList.length === 0) return
+    
+    setTodoList([...todoList.sort( sortCallback() )]);
+  }, [sort])
 
   const fetchData = async () => {
     setIsLoading(true)
@@ -31,7 +50,8 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`
       },
     }
-    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?sort[0][field]=completedAt&sort[0][direction]=asc&sort[1][field]=deadline&sort[1][direction]=asc`
+    
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}?`
 
     try {
       const response = await fetch(url, options)
@@ -49,13 +69,23 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
           deadline: item.fields.deadline,
         }
       })
-      setTodoList(todos)
+      setTodoList( todos.sort( sortCallback() ) )
       setIsLoading(false)
 
     } catch (error) {
       setIsLoading(false)
       setError("Something went wrong with the API")
       console.error(error)
+    }
+  }
+
+  const sortCallback = () => {
+    const sortField = sort.field as keyof TodoProps;
+    return (a: TodoProps, b: TodoProps) => {
+      if (!a[sortField] || !b[sortField]) return 0;
+      if (a[sortField] < b[sortField]) return sort.order === 'asc' ? -1 : 1;
+      if (a[sortField] > b[sortField]) return sort.order === 'asc' ? 1 : -1;
+      return 0;
     }
   }
 
@@ -145,7 +175,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <DataContext.Provider value={{todoList, isLoading, error, onRemoveTodo, onAddNew, onAddError}}>
+    <DataContext.Provider value={{todoList, isLoading, error, onRemoveTodo, onAddNew, onAddError, setSort}}>
       {children}
     </DataContext.Provider>
   )

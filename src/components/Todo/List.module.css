@@ -4,3 +4,9 @@
   gap: .5rem;
   padding:0 1rem;
 }
+.sortButtons{
+  display: flex;
+  flex-direction: row;
+  gap: .5rem;
+  margin: 1rem;
+}
