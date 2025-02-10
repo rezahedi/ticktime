@@ -30,9 +30,6 @@ a {
   text-decoration: none;
   color:#ffffffde
 }
-a:hover {
-  text-decoration: underline;
-}
 
 body {
   margin: 0;
@@ -111,5 +108,10 @@ header nav a.active{
   .container{
     max-width: 640px;
     width: 100%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .container{
+    margin: 0 1rem;
   }
 }

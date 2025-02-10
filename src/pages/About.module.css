@@ -1,0 +1,6 @@
+.content a{
+  color:#dc3545
+}
+.content a:hover{
+  text-decoration: underline;
+}

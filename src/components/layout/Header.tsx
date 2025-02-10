@@ -4,8 +4,8 @@ import styles from './Header.module.css'
 const Header = () => {
   return (
     <header>
-      <div className='container' style={{padding:'0 1rem'}}>
-        <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', margin:'1rem 0'}}>
+      <div className='container'>
+        <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', margin:'1rem 0 2rem 0'}}>
           <Link className={styles.logo} to="/">
             <img src='./public/ticktime.svg' />
             <div>
@@ -18,6 +18,7 @@ const Header = () => {
         <nav>
           <NavLink to='/'>Home</NavLink>
           <NavLink to='/new'>Add New</NavLink>
+          <NavLink to='/about'>About</NavLink>
         </nav>
       </div>
     </header>
