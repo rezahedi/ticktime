@@ -20,10 +20,11 @@ const Sort = (props: SortProps) => {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (isActive) {
-      setSearchParams({ sort: `${field},${isAscending ? 'desc' : 'asc'}` })
+      searchParams.set('sort', `${field},${isAscending ? 'desc' : 'asc'}`)
     } else {
-      setSearchParams({ sort: `${title.toLocaleLowerCase()},asc` })
+      searchParams.set('sort', `${title.toLocaleLowerCase()},asc`)
     }
+    setSearchParams(searchParams)
   }
 
   useEffect(() => {
