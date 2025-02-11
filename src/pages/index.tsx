@@ -1,7 +1,4 @@
-import { ListView } from '../components/ListViews'
-import { TimelineView } from '../components/ListViews'
-import { ListViewSkeleton } from '../components/ListViews/ListViewSkeleton'
-import { TimelineViewSkeleton } from '../components/ListViews/TimelineViewSkeleton'
+import { TimelineView, ListView, TimelineViewSkeleton, ListViewSkeleton } from '../components/ListViews'
 import AddNew from '../components/Todo/AddNew'
 import { useData } from '../context/DataContext'
 

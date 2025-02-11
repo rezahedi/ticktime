@@ -1,7 +1,7 @@
 import Skeleton from "../Todo/Skeleton"
 import styles from './TimelineView.module.css'
 
-export const TimelineViewSkeleton = () => {
+const TimelineViewSkeleton = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.timeBlock} style={{border:'none'}}>
@@ -28,3 +28,5 @@ export const TimelineViewSkeleton = () => {
     </div>
   )
 }
+
+export default TimelineViewSkeleton
