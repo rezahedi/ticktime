@@ -1,14 +1,18 @@
-import Item from "./Item";
-import styles from './List.module.css'
+import Item from "../Todo/Item";
+import styles from './ListView.module.css'
 import { TodoProps } from "../../lib/types";
 import Sort from "./Sort";
+import Empty from "./Timeline/Empty";
 
 interface ListProps {
   todoList: TodoProps[],
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
 }
 
-function List({ todoList, onRemoveTodo }: ListProps) {
+function ListView({ todoList, onRemoveTodo }: ListProps) {
+
+  if (todoList.length === 0)
+    return <Empty />
 
   return (
     <>
@@ -20,10 +24,9 @@ function List({ todoList, onRemoveTodo }: ListProps) {
         {todoList.map(item => (
           <Item key={item.id} todoItem={item} onRemoveTodo={onRemoveTodo} />
         ))}
-        {todoList.length === 0 && <p className='empty-list'>No Todos, Yay!</p>}
       </div>
     </>
   )
 }
 
-export default List
+export default ListView

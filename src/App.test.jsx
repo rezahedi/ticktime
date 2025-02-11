@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, vi } from "vitest";
-import { calculateRemainedDays } from "./components/Todo/Item"
+import { calculateRemainedDays } from "./lib/dates"
 
 describe("calculateRemainedDays", () => {
 
