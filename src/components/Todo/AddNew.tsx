@@ -14,7 +14,7 @@ function AddNew({ extended=false, navigateToHome=false }: AddNewProps) {
   const {onAddNew, onAddError} = useData()
   const navigate = useNavigate()
 
-  const todayDate = new Date().toLocaleDateString('en-CA');
+  const todayDate = new Date().toLocaleDateString('en-US');
   const [title, setTitle] = useState('')
   const [icon, setIcon] = useState('')
   const [deadline, setDeadline] = useState(todayDate)
