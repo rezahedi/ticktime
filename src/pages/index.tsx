@@ -19,7 +19,7 @@ const Main = () => {
         </div>
       }
       {error && <p className='error'>{error}</p>}
-      <TimelineView />
+      <TimelineView todoList={todoList} onRemoveTodo={onRemoveTodo} />
       {!isLoading &&
         <ListView todoList={todoList} onRemoveTodo={onRemoveTodo} />
       }
