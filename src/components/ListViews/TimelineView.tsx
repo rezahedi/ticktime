@@ -40,12 +40,12 @@ export const TimelineView = ({ todoList, onRemoveTodo }: ListProps) => {
       {todoList.length===0 && <Empty />}
       {todoList.length>0 &&
         <>
-          <TimeBlock title='Past Due' color='#DC3545' todos={pastDueTodos}>
+          <TimeBlock title='Past Due' color='#DC3545' todos={pastDueTodos} onRemoveTodo={onRemoveTodo}>
           💀 {pastDueTodos.length} passed due items, click to see them.
           </TimeBlock>
-          <TimeBlock title="Today" color="#28A745" todos={todayTodos} showEmpty />
-          <TimeBlock title='Coming Up' color='#FFD700' todos={comingTodos} />
-          <TimeBlock title='Completed' color='#B0BEC5' todos={allCompletedTodos}>
+          <TimeBlock title="Today" color="#28A745" todos={todayTodos} onRemoveTodo={onRemoveTodo} showEmpty />
+          <TimeBlock title='Coming Up' color='#FFD700' todos={comingTodos} onRemoveTodo={onRemoveTodo} />
+          <TimeBlock title='Completed' color='#B0BEC5' todos={allCompletedTodos} onRemoveTodo={onRemoveTodo}>
             🎉 {allCompletedTodos.length} todos done so far, click to see them.
           </TimeBlock>
         </>

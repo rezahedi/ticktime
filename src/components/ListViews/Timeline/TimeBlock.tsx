@@ -10,11 +10,12 @@ interface TimeBlockProps {
   title: string,
   color: string,
   todos: TodoProps[],
+  onRemoveTodo: (todo: TodoProps) => Promise<void>,
   showEmpty?: boolean,
   children?: React.ReactNode,
 }
 const TimeBlock = (props: TimeBlockProps) => {
-  const { title, color, todos, showEmpty, children } = props
+  const { title, color, todos, onRemoveTodo, showEmpty, children } = props
   const isCollapsible = children ? true : false;
   const [expand, setExpand] = useState<boolean>(false)
 
@@ -40,7 +41,7 @@ const TimeBlock = (props: TimeBlockProps) => {
         {(!isCollapsible || expand) &&
           <>
             {todos.map(todo => 
-              <Item key={todo.id} todoItem={todo} onRemoveTodo={async ()=>{await 0;}} />
+              <Item key={todo.id} todoItem={todo} onRemoveTodo={onRemoveTodo} />
             )}
             {showEmpty && todos.length===0 && <Hooray />}
           </>
