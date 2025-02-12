@@ -7,7 +7,7 @@ const Main = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const view: string = searchParams.get('view')=='list' ? 'list' : 'timeline'
 
-  const {todoList, isLoading, error, onRemoveTodo} = useData()
+  const {todoList, isLoading, error, onDoneTodo, onRemoveTodo} = useData()
 
   const handleClick = () => {
     setSearchParams({
@@ -17,8 +17,8 @@ const Main = () => {
 
   const renderView = () => {
     if (view == 'timeline')
-      return isLoading ? <TimelineViewSkeleton /> : <TimelineView todoList={todoList} onRemoveTodo={onRemoveTodo} />
-    return isLoading ? <ListViewSkeleton /> : <ListView todoList={todoList} onRemoveTodo={onRemoveTodo} />
+      return isLoading ? <TimelineViewSkeleton /> : <TimelineView todoList={todoList} onDoneTodo={onDoneTodo} onRemoveTodo={onRemoveTodo} />
+    return isLoading ? <ListViewSkeleton /> : <ListView todoList={todoList} onDoneTodo={onDoneTodo} onRemoveTodo={onRemoveTodo} />
   }
 
   return (

@@ -5,10 +5,11 @@ import { calculateRemainedDays } from '../../lib/dates';
 
 interface ItemProps {
   todoItem: TodoProps,
+  onDoneTodo: (todo: TodoProps) => Promise<void>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
 }
 
-function Item({ todoItem, onRemoveTodo }: ItemProps) {
+function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   const days = calculateRemainedDays(todoItem.deadline)
   const [toggle, setToggle] = useState<boolean>(false)
 
@@ -17,8 +18,10 @@ function Item({ todoItem, onRemoveTodo }: ItemProps) {
     onRemoveTodo(todoItem)
   }
 
-  const handleDoneClick = () => {
-    // TODO: call onDoneTodo()
+  const handleDoneClick = async () => {
+    if(isCompleted) return;
+    
+    await onDoneTodo(todoItem)
     console.log('done', todoItem)
   }
 

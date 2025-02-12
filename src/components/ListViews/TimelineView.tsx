@@ -6,10 +6,11 @@ import Empty from "./Timeline/Empty"
 
 interface ListProps {
   todoList: TodoProps[],
+  onDoneTodo: (todo: TodoProps) => Promise<void>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
 }
 
-export const TimelineView = ({ todoList, onRemoveTodo }: ListProps) => {
+export const TimelineView = ({ todoList, onDoneTodo, onRemoveTodo }: ListProps) => {
 
   const pastDueTodos = todoList.filter(todo => {
     const days = calculateRemainedDays(todo.deadline)
@@ -40,12 +41,12 @@ export const TimelineView = ({ todoList, onRemoveTodo }: ListProps) => {
       {todoList.length===0 && <Empty />}
       {todoList.length>0 &&
         <>
-          <TimeBlock title='Past Due' color='#DC3545' todos={pastDueTodos} onRemoveTodo={onRemoveTodo}>
+          <TimeBlock title='Past Due' color='#DC3545' todos={pastDueTodos} onDoneTodo={onDoneTodo} onRemoveTodo={onRemoveTodo}>
           💀 {pastDueTodos.length} passed due items, click to see them.
           </TimeBlock>
-          <TimeBlock title="Today" color="#28A745" todos={todayTodos} onRemoveTodo={onRemoveTodo} showEmpty />
-          <TimeBlock title='Coming Up' color='#FFD700' todos={comingTodos} onRemoveTodo={onRemoveTodo} />
-          <TimeBlock title='Completed' color='#B0BEC5' todos={allCompletedTodos} onRemoveTodo={onRemoveTodo}>
+          <TimeBlock title="Today" color="#28A745" todos={todayTodos} onDoneTodo={onDoneTodo} onRemoveTodo={onRemoveTodo} showEmpty />
+          <TimeBlock title='Coming Up' color='#FFD700' todos={comingTodos} onDoneTodo={onDoneTodo} onRemoveTodo={onRemoveTodo} />
+          <TimeBlock title='Completed' color='#B0BEC5' todos={allCompletedTodos} onDoneTodo={onDoneTodo} onRemoveTodo={onRemoveTodo}>
             🎉 {allCompletedTodos.length} todos done so far, click to see them.
           </TimeBlock>
         </>

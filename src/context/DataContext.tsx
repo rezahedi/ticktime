@@ -6,6 +6,7 @@ interface DataContextType {
   todoList: TodoProps[],
   isLoading: boolean,
   error: string,
+  onDoneTodo: (todo: TodoProps) => Promise<void>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
   onAddNew: (todo: NewTodoProps) => Promise<boolean>,
   onAddError: string,
@@ -90,9 +91,9 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  const onMarkTodo = async (todo: TodoProps) => {
+  const onDoneTodo = async (todo: TodoProps) => {
     const completedAt = new Date().toLocaleDateString('en-US')
-    setTodoList(todoList.map(item =>
+    await setTodoList(todoList.map(item =>
       item.id === todo.id ? { ...item, completedAt} : item
     ))
   }
@@ -183,7 +184,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <DataContext.Provider value={{todoList, isLoading, error, onRemoveTodo, onAddNew, onAddError, setSort}}>
+    <DataContext.Provider value={{todoList, isLoading, error, onDoneTodo, onRemoveTodo, onAddNew, onAddError, setSort}}>
       {children}
     </DataContext.Provider>
   )

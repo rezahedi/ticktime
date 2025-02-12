@@ -3,19 +3,19 @@ import { TodoProps } from '../../../lib/types'
 import Item from '../../Todo/Item'
 import styles from '../TimelineView.module.css'
 import itemStyles from '../../Todo/Item.module.css'
-import Empty from './Empty'
 import Hooray from './Hooray'
 
 interface TimeBlockProps {
   title: string,
   color: string,
   todos: TodoProps[],
+  onDoneTodo: (todo: TodoProps) => Promise<void>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
   showEmpty?: boolean,
   children?: React.ReactNode,
 }
 const TimeBlock = (props: TimeBlockProps) => {
-  const { title, color, todos, onRemoveTodo, showEmpty, children } = props
+  const { title, color, todos, onDoneTodo, onRemoveTodo, showEmpty, children } = props
   const isCollapsible = children ? true : false;
   const [expand, setExpand] = useState<boolean>(false)
 
@@ -41,7 +41,7 @@ const TimeBlock = (props: TimeBlockProps) => {
         {(!isCollapsible || expand) &&
           <>
             {todos.map(todo => 
-              <Item key={todo.id} todoItem={todo} onRemoveTodo={onRemoveTodo} />
+              <Item key={todo.id} todoItem={todo} onDoneTodo={onDoneTodo} onRemoveTodo={onRemoveTodo} />
             )}
             {showEmpty && todos.length===0 && <Hooray />}
           </>

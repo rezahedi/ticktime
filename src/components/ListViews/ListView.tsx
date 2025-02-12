@@ -6,10 +6,11 @@ import Empty from "./Timeline/Empty";
 
 interface ListProps {
   todoList: TodoProps[],
+  onDoneTodo: (todo: TodoProps) => Promise<void>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
 }
 
-function ListView({ todoList, onRemoveTodo }: ListProps) {
+function ListView({ todoList, onDoneTodo, onRemoveTodo }: ListProps) {
 
   if (todoList.length === 0)
     return <Empty />
@@ -22,7 +23,7 @@ function ListView({ todoList, onRemoveTodo }: ListProps) {
       </div>
       <div className={styles.list}>
         {todoList.map(item => (
-          <Item key={item.id} todoItem={item} onRemoveTodo={onRemoveTodo} />
+          <Item key={item.id} todoItem={item} onDoneTodo={onDoneTodo} onRemoveTodo={onRemoveTodo} />
         ))}
       </div>
     </>
