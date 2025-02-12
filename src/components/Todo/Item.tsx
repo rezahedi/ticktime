@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styles from './Item.module.css'
 import { TodoProps } from "../../lib/types";
 import { calculateRemainedDays } from '../../lib/dates';
@@ -9,7 +10,7 @@ interface ItemProps {
 
 function Item({ todoItem, onRemoveTodo }: ItemProps) {
   const days = calculateRemainedDays(todoItem.deadline)
-  const deadlineMessage = days > 0 ? `${days} days remained` : days===0 ? `Due today` : `${Math.abs(days)} days passed`
+  const [toggle, setToggle] = useState<boolean>(false)
 
 
   const handleRemoveClick = () => {
@@ -19,6 +20,10 @@ function Item({ todoItem, onRemoveTodo }: ItemProps) {
   const handleDoneClick = () => {
     // TODO: call onDoneTodo()
     console.log('done', todoItem)
+  }
+
+  const handleToggle = () => {
+    setToggle(!toggle)
   }
 
   const isCompleted = todoItem.completedAt
@@ -33,7 +38,7 @@ function Item({ todoItem, onRemoveTodo }: ItemProps) {
   }
 
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={handleToggle}>
       <div className={styles.icon}>{todoItem.icon}</div>
       <div className={`${todoItem.temp ? styles.temporary : ''} ${styles.content}`}>
         <div className={`${isCompleted ? styles.completed : ''} ${styles.title}`}>
@@ -42,6 +47,7 @@ function Item({ todoItem, onRemoveTodo }: ItemProps) {
         <div>
           {renderDueLabel()}
         </div>
+        <p className={toggle ? styles.show : ''}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
         {todoItem.description && todoItem.description!=='' && <p>s{todoItem.description}</p>}
         <div className={styles.actions}>
           {!isCompleted &&

@@ -69,4 +69,10 @@
   .title{
     font-size: 14pt
   }
+  .content p{
+    display:none;
+  }
+  .content p.show{
+    display:block;
+  }
 }
