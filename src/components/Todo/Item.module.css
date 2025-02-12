@@ -8,6 +8,18 @@
   padding: .5rem;
   border: 2px solid transparent
 }
+.hidingAnimation{
+  animation-duration: .3s;
+  animation-name: hiding;
+}
+@keyframes hiding {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .icon{
   font-size: 50pt;
   margin:-.5rem;

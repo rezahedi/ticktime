@@ -12,7 +12,7 @@ interface ItemProps {
 function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   const days = calculateRemainedDays(todoItem.deadline)
   const [toggle, setToggle] = useState<boolean>(false)
-
+  const [isHiding, setIsHiding] = useState<boolean>(false)
 
   const handleRemoveClick = () => {
     onRemoveTodo(todoItem)
@@ -20,9 +20,10 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
 
   const handleDoneClick = async () => {
     if(isCompleted) return;
-    
-    await onDoneTodo(todoItem)
-    console.log('done', todoItem)
+
+    setIsHiding(true)
+    // Wait time for 300s hiding animation
+    await setTimeout(()=>onDoneTodo(todoItem), 300)
   }
 
   const handleToggle = () => {
@@ -41,10 +42,10 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   }
 
   return (
-    <div className={styles.item} onClick={handleToggle}>
+    <div className={`${styles.item} ${isHiding ? styles.hidingAnimation : ''}`} onClick={handleToggle}>
       <div className={styles.icon}>{todoItem.icon}</div>
-      <div className={`${todoItem.temp ? styles.temporary : ''} ${styles.content}`}>
-        <div className={`${isCompleted ? styles.completed : ''} ${styles.title}`}>
+      <div className={`${styles.content} ${todoItem.temp ? styles.temporary : ''}`}>
+        <div className={`${styles.title} ${isCompleted ? styles.completed : ''}`}>
           {todoItem.title}
         </div>
         <div>
