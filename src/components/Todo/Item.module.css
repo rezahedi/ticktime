@@ -1,13 +1,35 @@
 .item{
   cursor: pointer;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: .5rem;
+  align-items: start;
+  gap: 1rem;
   background-color: #131314;
   border-radius: 1rem;
   padding: .5rem;
   border: 2px solid transparent
+}
+.icon{
+  font-size: 50pt;
+  margin:-.5rem;
+}
+.content{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: .3rem;
+}
+.content p{
+  text-wrap: balance;
+  margin: .2rem 0;
+}
+.title{
+  font-size: 20pt
+}
+.actions{
+  margin-top:.2rem;
+  display: flex;
+  gap: .5rem;
+  justify-content: end;
 }
 .item:hover{
   border-color: #646cff
@@ -27,15 +49,24 @@
 }
 
 .remainedDeadline, .passedDeadline {
+  font-style: normal;
   white-space: nowrap;
-  margin-left:.5rem;
-  font-size: x-small;
+  font-size: 9pt;
   border-radius: 1rem;
-  padding: .1rem .8rem;
+  padding: .2rem .9rem;
 }
 .remainedDeadline {
   background-color: #48ff0062;
 }
 .passedDeadline {
   background-color: #ff191962;
+}
+@media screen and (max-width: 768px) {
+  .icon{
+    font-size: 35pt;
+    margin:-.3rem;
+  }
+  .title{
+    font-size: 14pt
+  }
 }

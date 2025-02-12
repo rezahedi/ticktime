@@ -2,6 +2,7 @@ export interface AirTableDefaultType {
   id: string,
   fields: {
     title: string,
+    description?: string,
     completedAt?: string,
     icon: string,
     deadline: string,
@@ -10,6 +11,7 @@ export interface AirTableDefaultType {
 
 export interface NewTodoProps {
   title: string,
+  description?: string,
   completedAt?: string,
   icon: string,
   deadline: string,

@@ -64,6 +64,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
         return {
           id: item.id,
           title: item.fields.title,
+          description: item.fields.description,
           completedAt: item.fields.completedAt,
           icon: item.fields.icon,
           deadline: item.fields.deadline,
@@ -87,6 +88,13 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       if (a[sortField] > b[sortField]) return sort.order === 'asc' ? 1 : -1;
       return 0;
     }
+  }
+
+  const onMarkTodo = async (todo: TodoProps) => {
+    const completedAt = new Date().toLocaleDateString('en-US')
+    setTodoList(todoList.map(item =>
+      item.id === todo.id ? { ...item, completedAt} : item
+    ))
   }
 
   const onRemoveTodo = async (todo: TodoProps) => {

@@ -16,6 +16,7 @@ function AddNew({ extended=false, navigateToHome=false }: AddNewProps) {
 
   const todayDate = new Date().toLocaleDateString('en-US');
   const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
   const [icon, setIcon] = useState('')
   const [deadline, setDeadline] = useState(todayDate)
   const [isExtended, setIsExtended] = useState(extended)
@@ -26,6 +27,7 @@ function AddNew({ extended=false, navigateToHome=false }: AddNewProps) {
     e.preventDefault()
     const res = await onAddNew({
       title,
+      description,
       icon,
       deadline,
     })
