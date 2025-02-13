@@ -14,8 +14,10 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   const [toggle, setToggle] = useState<boolean>(false)
   const [isHiding, setIsHiding] = useState<boolean>(false)
 
-  const handleRemoveClick = () => {
-    onRemoveTodo(todoItem)
+  const handleRemoveClick = async () => {
+    setIsHiding(true)
+    // Wait time for 300s hiding animation
+    await setTimeout(()=>onRemoveTodo(todoItem), 300)
   }
 
   const handleDoneClick = async () => {
