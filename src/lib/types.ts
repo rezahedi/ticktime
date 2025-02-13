@@ -1,12 +1,6 @@
 export interface AirTableDefaultType {
   id: string,
-  fields: {
-    title: string,
-    description?: string,
-    completedAt?: string,
-    icon: string,
-    deadline: string,
-  }
+  fields: NewTodoProps
 }
 
 export interface NewTodoProps {
