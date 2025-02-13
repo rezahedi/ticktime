@@ -6,7 +6,7 @@ interface DataContextType {
   todoList: TodoProps[],
   isLoading: boolean,
   error: string,
-  onDoneTodo: (todo: TodoProps) => Promise<void>,
+  onDoneTodo: (todo: TodoProps) => Promise<boolean>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
   onAddNew: (todo: NewTodoProps) => Promise<boolean>,
   onAddError: string,
@@ -92,10 +92,54 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const onDoneTodo = async (todo: TodoProps) => {
+    // Destructure todo to `id` and the rest of the fields as `todoFields` {id, ...rest} = obj = {id, name, blah, blah, blah}
+    const {id: todoId, ...todoFields} = todo
     const completedAt = new Date().toLocaleDateString('en-US')
-    await setTodoList(todoList.map(item =>
-      item.id === todo.id ? { ...item, completedAt} : item
+    // Optimistic UI update
+    setTodoList(todoList.map(item =>
+      item.id === todoId ? { ...item, completedAt} : item
     ))
+
+
+    const options = {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      // Create the updated Todo's object in fetch's body payload
+      body: JSON.stringify({
+        records: [{
+          id: todoId,
+          fields: { ...todoFields, completedAt}
+        }]
+      }),
+    }
+    const url = `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${import.meta.env.VITE_TABLE_NAME}`
+
+    try {
+      const response = await fetch(url, options)
+      if ( !response.ok ) {
+        throw new Error(`Error: ${response.status}`)
+      }
+
+      // Updated? do nothing as UI updated optimistically
+      // const data = await response.json()
+      // const updatedTodo = data.records[0]
+      return true;
+
+    } catch (error) {
+      // Undo optimistic update
+      const newTodoList = todoList.map(item =>
+        item.id === todoId ? todo : item
+      )
+      setTodoList( newTodoList )
+
+      setOnAddError("Something went wrong, try again")
+      console.error(error)
+      
+      return false;
+    }
   }
 
   const onRemoveTodo = async (todo: TodoProps) => {

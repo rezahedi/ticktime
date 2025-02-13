@@ -5,7 +5,7 @@ import { calculateRemainedDays } from '../../lib/dates';
 
 interface ItemProps {
   todoItem: TodoProps,
-  onDoneTodo: (todo: TodoProps) => Promise<void>,
+  onDoneTodo: (todo: TodoProps) => Promise<boolean>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
 }
 

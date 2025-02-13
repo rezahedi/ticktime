@@ -6,7 +6,7 @@ import Empty from "./Timeline/Empty"
 
 interface ListProps {
   todoList: TodoProps[],
-  onDoneTodo: (todo: TodoProps) => Promise<void>,
+  onDoneTodo: (todo: TodoProps) => Promise<boolean>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
 }
 

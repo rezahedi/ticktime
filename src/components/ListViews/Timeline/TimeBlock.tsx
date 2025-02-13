@@ -9,7 +9,7 @@ interface TimeBlockProps {
   title: string,
   color: string,
   todos: TodoProps[],
-  onDoneTodo: (todo: TodoProps) => Promise<void>,
+  onDoneTodo: (todo: TodoProps) => Promise<boolean>,
   onRemoveTodo: (todo: TodoProps) => Promise<void>,
   showEmpty?: boolean,
   children?: React.ReactNode,
