@@ -53,8 +53,7 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
         <div>
           {renderDueLabel()}
         </div>
-        <p className={toggle ? styles.show : ''}>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-        {todoItem.description && todoItem.description!=='' && <p>s{todoItem.description}</p>}
+        {todoItem.description && todoItem.description!=='' && <p className={toggle ? styles.show : ''}>{todoItem.description}</p>}
         <div className={styles.actions}>
           {!isCompleted &&
             <button className={styles.doneBtn} onClick={handleDoneClick}>Done</button>
