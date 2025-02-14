@@ -1,25 +1,18 @@
 import { useState, useEffect } from 'react'
 import styles from './AddNew.module.css'
-import InputWithLabel from '../InputWithLabel'
 import { useData } from '../../context/DataContext'
 import { useNavigate } from 'react-router-dom'
 import SelectIcon from './SelectIcon'
 
-interface AddNewProps {
-  extended?: boolean,
-  navigateToHome?: boolean,
-}
-
-function AddNew({ extended=false, navigateToHome=false }: AddNewProps) {
+function AddNew() {
   const {onAddNew, onAddError} = useData()
   const navigate = useNavigate()
 
-  const todayDate = new Date().toLocaleDateString('en-US');
+  const todayDate = new Date().toLocaleDateString("en-CA"); // en-CA return yyyy-mm-dd format that input type date needs!
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [icon, setIcon] = useState('')
   const [deadline, setDeadline] = useState(todayDate)
-  const [isExtended, setIsExtended] = useState(extended)
   // const [isLoading, setIsLoading] = useState(false)
   // const [error, setError] = useState('')
 
@@ -32,42 +25,27 @@ function AddNew({ extended=false, navigateToHome=false }: AddNewProps) {
       deadline,
     })
     if(res) {
-      setTitle('')
-      if(navigateToHome)
-        navigate('/')
+      navigate('/')
     }
-
   }
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle( e.target.value )
-  }
-
-  useEffect(() => {
-    setIsExtended(title!=='' || extended)
-  }, [title])
 
   return (
     <>
-      <form className={styles.form} onSubmit={handleFormSubmission} onClick={()=>setIsExtended(true)}>
+      <form className={styles.form} onSubmit={handleFormSubmission}>
         <div className={styles.mainRow}>
-          <InputWithLabel title={title} handleTitleChange={handleTitleChange}>
-            Title
-          </InputWithLabel>
-          <button type="submit">
-            Add
-          </button>
+          <SelectIcon setIcon={setIcon} />
+          <input type="text" value={title} maxLength={40} onChange={e=>setTitle(e.target.value)} required={true} placeholder="Ex: Do cleaning ..." />
         </div>
-        {isExtended && <div className={styles.extention}>
+        <textarea name="description" rows={4} onChange={e=>setDescription(e.target.value)} placeholder='Describe your todo ...'>{description}</textarea>
+        <div className={styles.extension}>
           <label>
-            Icon
-            <SelectIcon setIcon={setIcon} />
+            Due on <input name='deadline' value={deadline} type='date' onChange={e=>setDeadline(e.target.value)} />
           </label>
-          <label>
-            Complete by
-            <input name='deadline' defaultValue={todayDate} type='date' onChange={(e) => setDeadline(e.target.value)} />
-          </label>
-        </div>}
+        </div>
+        <div className={styles.actions}>
+          <button type="submit">Create</button>
+          <button onClick={()=>navigate('/')}>Cancel</button>
+        </div>
       </form>
       {onAddError && <p className='error'>{onAddError}</p>}
     </>

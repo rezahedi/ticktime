@@ -25,6 +25,9 @@
   align-content: stretch;
   flex-basis: auto;
 }
+* {
+  box-sizing: border-box;
+}
 
 a {
   text-decoration: none;
