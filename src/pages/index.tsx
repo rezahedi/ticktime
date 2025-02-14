@@ -1,7 +1,7 @@
 import { useSearchParams } from 'react-router-dom'
 import { TimelineView, ListView, TimelineViewSkeleton, ListViewSkeleton } from '../components/ListViews'
-import AddNew from '../components/Todo/AddNew'
 import { useData } from '../context/DataContext'
+import AddNewOneLine from '../components/Todo/AddNewOneLine'
 
 const Main = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,7 +23,7 @@ const Main = () => {
 
   return (
     <>
-      <AddNew navigateToHome={false} />
+      <AddNewOneLine />
       <button onClick={handleClick}>{view==='timeline' ? 'List View' : 'Timeline View'}</button>
       {error && <p className='error'>{error}</p>}
       {renderView()}

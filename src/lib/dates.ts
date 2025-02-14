@@ -1,3 +1,7 @@
+/**
+ * @param date = 'yyyy-dd-mm'
+ * @returns 'mm/dd/yyy'
+ */
 export const convertDateFormat = (date: string): string => {
   const [year, month, day] = date.split('-')
   return `${month}/${day}/${year}`
