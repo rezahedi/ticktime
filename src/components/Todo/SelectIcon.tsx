@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import styles from './SelectIcon.module.css'
 const ICONS: string[] = [
   '🏃‍➡️',
@@ -11,20 +10,17 @@ const ICONS: string[] = [
 ]
 
 interface SelectIconProps {
-  setIcon: (icon: string) => void,
+  name: string,
 }
 
-function SelectIcon({ setIcon }: SelectIconProps) {
-  useEffect(() => {
-    setIcon(ICONS[0])
-  }, [])
+function SelectIcon({ name }: SelectIconProps) {
 
   const handleSelectIcon = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setIcon(e.target.value)
+    // setIcon(e.target.value)
   }
 
   return (
-    <select className={styles.iconSelector} name='icon' onChange={handleSelectIcon}>
+    <select className={styles.iconSelector} name={name} onChange={handleSelectIcon}>
       {ICONS.map(i => <option key={i} value={i}>{i}</option>)}
     </select>
   )

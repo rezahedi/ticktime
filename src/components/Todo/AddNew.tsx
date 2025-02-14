@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import styles from './AddNew.module.css'
 import { useData } from '../../context/DataContext'
 import { useNavigate } from 'react-router-dom'
@@ -9,37 +8,36 @@ function AddNew() {
   const navigate = useNavigate()
 
   const todayDate = new Date().toLocaleDateString("en-CA"); // en-CA return yyyy-mm-dd format that input type date needs!
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [icon, setIcon] = useState('')
-  const [deadline, setDeadline] = useState(todayDate)
   // const [isLoading, setIsLoading] = useState(false)
   // const [error, setError] = useState('')
 
   const handleFormSubmission = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    // Using formData API, controlled components cause re-render
+    const formData = new FormData( e.target as HTMLFormElement );
+    const {title, description, icon, deadline} = Object.fromEntries(formData.entries()) as { [key: string]: string }
+
     const res = await onAddNew({
       title,
       description,
       icon,
       deadline,
     })
-    if(res) {
-      navigate('/')
-    }
+    res && navigate('/')
   }
 
   return (
     <>
       <form className={styles.form} onSubmit={handleFormSubmission}>
         <div className={styles.mainRow}>
-          <SelectIcon setIcon={setIcon} />
-          <input type="text" value={title} maxLength={40} onChange={e=>setTitle(e.target.value)} required={true} placeholder="Ex: Do cleaning ..." />
+          <SelectIcon name='icon' />
+          <input name='title' type="text" maxLength={40} required={true} placeholder="Ex: Do cleaning ..." />
         </div>
-        <textarea name="description" rows={4} onChange={e=>setDescription(e.target.value)} placeholder='Describe your todo ...'>{description}</textarea>
+        <textarea name="description" rows={4} placeholder='Describe your todo ...'></textarea>
         <div className={styles.extension}>
           <label>
-            Due on <input name='deadline' value={deadline} type='date' onChange={e=>setDeadline(e.target.value)} />
+            Due on <input name='deadline' defaultValue={todayDate} type='date' />
           </label>
         </div>
         <div className={styles.actions}>
