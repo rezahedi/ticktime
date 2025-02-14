@@ -42,8 +42,8 @@ body {
 }
 
 .container{
-  flex: 1;
   margin: 0 auto;
+  min-width: 750px;
 }
 
 h1 {
@@ -116,5 +116,7 @@ header nav a.active{
 @media screen and (max-width: 768px) {
   .container{
     margin: 0 1rem;
+    width:auto;
+    min-width: auto;
   }
 }
