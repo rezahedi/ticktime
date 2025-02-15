@@ -6,7 +6,10 @@
   background-color: #131314;
   border-radius: 1rem;
   padding: .5rem;
-  border: 2px solid transparent
+  border: 2px solid transparent;
+  margin-bottom:.5rem;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .hidingAnimation{
   animation-duration: .3s;
@@ -18,6 +21,7 @@
   }
   to {
     opacity: 0;
+    height: 0;
   }
 }
 .icon{

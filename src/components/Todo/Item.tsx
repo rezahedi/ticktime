@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useLayoutEffect, useRef } from 'react'
 import styles from './Item.module.css'
 import { TodoProps } from "../../lib/types";
 import { calculateRemainedDays } from '../../lib/dates';
@@ -13,6 +13,13 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   const days = calculateRemainedDays(todoItem.deadline)
   const [toggle, setToggle] = useState<boolean>(false)
   const [isHiding, setIsHiding] = useState<boolean>(false)
+  const itemRef = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    if(!itemRef || !itemRef.current) return;
+    const height = itemRef.current.offsetHeight;
+    itemRef.current.style.height = `${height}px`
+  })
 
   const handleRemoveClick = async () => {
     setIsHiding(true)
@@ -44,21 +51,23 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   }
 
   return (
-    <div className={`${styles.item} ${isHiding ? styles.hidingAnimation : ''}`} onClick={handleToggle}>
-      <div className={styles.icon}>{todoItem.icon}</div>
-      <div className={`${styles.content} ${todoItem.temp ? styles.temporary : ''}`}>
-        <div className={`${styles.title} ${isCompleted ? styles.completed : ''}`}>
-          {todoItem.title}
-        </div>
-        <div>
-          {renderDueLabel()}
-        </div>
-        {todoItem.description && todoItem.description!=='' && <p className={toggle ? styles.show : ''}>{todoItem.description}</p>}
-        <div className={styles.actions}>
-          {!isCompleted &&
-            <button className={styles.doneBtn} onClick={handleDoneClick}>Done</button>
-          }
-          <button className={styles.removeBtn} onClick={handleRemoveClick}>Remove</button>
+    <div ref={itemRef} className={`${isHiding ? styles.hidingAnimation : ''}`}>
+      <div className={`${styles.item}`} onClick={handleToggle}>
+        <div className={styles.icon}>{todoItem.icon}</div>
+        <div className={`${styles.content} ${todoItem.temp ? styles.temporary : ''}`}>
+          <div className={`${styles.title} ${isCompleted ? styles.completed : ''}`}>
+            {todoItem.title}
+          </div>
+          <div>
+            {renderDueLabel()}
+          </div>
+          {todoItem.description && todoItem.description!=='' && <p className={toggle ? styles.show : ''}>{todoItem.description}</p>}
+          <div className={styles.actions}>
+            {!isCompleted &&
+              <button className={styles.doneBtn} onClick={handleDoneClick}>Done</button>
+            }
+            <button className={styles.removeBtn} onClick={handleRemoveClick}>Remove</button>
+          </div>
         </div>
       </div>
     </div>
