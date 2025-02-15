@@ -1,0 +1,48 @@
+.toast{
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  display: flex;
+  justify-content: center;
+  box-shadow: 2px 2px 2px 1px #00000055;
+  overflow: hidden;
+  opacity: 0;
+  animation-duration: 3s;
+  animation-name: fade;
+  animation-timing-function: linear;
+
+  &:after {
+    position: absolute;
+    top:0px;
+    left:0px;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: #0000001e;
+    animation-duration: 3s;
+    animation-name: slide;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes fade {
+  5%{
+    opacity: 1;
+  }
+  95%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+@keyframes slide {
+  from {
+    transform: translateX(-100%); 
+  }
+  to {
+    transform: translateX(0%); 
+  }
+}

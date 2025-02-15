@@ -1,4 +1,5 @@
 import { useState, createContext, useContext, useRef } from "react";
+import './Toast.css'
 
 const TOAST_TIMEOUT = 3000;
 const SUCCESS_COLOR = "#32a852";
@@ -64,17 +65,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode}) => {
 			}}
 		>
 			{showing && (
-				<div style={{
-          position: 'fixed',
-          bottom: '30px',
-          right: '30px',
-          padding: '.5rem 1rem',
-          borderRadius: '.5rem',
-          display: 'flex',
-          justifyContent: 'center',
-          backgroundColor: color,
-          boxShadow: '2px 2px 2px 1px #00000055',
-        }}>
+				<div className="toast" style={{backgroundColor: color}}>
           {text}
         </div>
 			)}
