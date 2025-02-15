@@ -1,5 +1,6 @@
 import { useState, createContext, useContext, useRef } from "react";
 
+const TOAST_TIMEOUT = 3000;
 const SUCCESS_COLOR = "#32a852";
 const WARNING_COLOR = "#bdac19";
 const ERROR_COLOR = "#a83232";
@@ -45,7 +46,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode}) => {
 		const id = setTimeout(() => {
 			setShowing(false);
 			timeoutIdRef.current = null;
-		}, 3000);
+		}, TOAST_TIMEOUT);
 		timeoutIdRef.current = id;
 
 		setColor(withColor);
@@ -63,22 +64,19 @@ export const ToastProvider = ({ children }: { children: React.ReactNode}) => {
 			}}
 		>
 			{showing && (
-				<div id="toastContainer" style={{
+				<div style={{
           position: 'fixed',
           bottom: '30px',
           right: '30px',
-          minWidth: '240px',
-          minHeight: '60px',
-          padding: '10px',
-          paddingLeft: '30px',
-          paddingRight: '30px',
-          borderRadius: '10px',
+          padding: '.5rem 1rem',
+          borderRadius: '.5rem',
           display: 'flex',
           justifyContent: 'center',
           backgroundColor: color,
+          boxShadow: '2px 2px 2px 1px #00000055',
         }}>
-					<h2 id="toastText">{text}</h2>
-				</div>
+          {text}
+        </div>
 			)}
 			{children}
 		</ToastContext.Provider>
