@@ -2,6 +2,7 @@ import { useState, useLayoutEffect, useRef } from 'react'
 import styles from './Item.module.css'
 import { TodoProps } from "../../lib/types";
 import { calculateRemainedDays } from '../../lib/dates';
+import { useToast } from '../../context/ToastContext';
 
 interface ItemProps {
   todoItem: TodoProps,
@@ -14,6 +15,7 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   const [toggle, setToggle] = useState<boolean>(false)
   const [isHiding, setIsHiding] = useState<boolean>(false)
   const itemRef = useRef<HTMLDivElement>(null)
+  const { success, error } = useToast()
 
   useLayoutEffect(() => {
     if(!itemRef || !itemRef.current) return;
@@ -32,7 +34,11 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
 
     setIsHiding(true)
     // Wait time for 300s hiding animation
-    await setTimeout(()=>onDoneTodo(todoItem), 300)
+    await setTimeout(async ()=>{
+      const res = await onDoneTodo(todoItem)
+      if(!res) return error('Something with marking todo done went wrong.')
+      success('Todo marked done, Congratulation.')
+    }, 300)
   }
 
   const handleToggle = () => {

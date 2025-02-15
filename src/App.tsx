@@ -4,18 +4,20 @@ import New from './pages/New'
 import About from './pages/About'
 import { Header, Footer } from './components/layout'
 import { DataProvider } from './context/DataContext'
-
+import { ToastProvider } from './context/ToastContext'
 function App() {
   return (
     <>
       <Header />
       <div className='container'>
         <DataProvider>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/new" element={<New />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
+          <ToastProvider>
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/new" element={<New />} />
+              <Route path="/about" element={<About />} />
+            </Routes>
+          </ToastProvider>
         </DataProvider>
       </div>
       <Footer />

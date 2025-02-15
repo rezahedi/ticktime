@@ -2,10 +2,12 @@ import styles from './AddNew.module.css'
 import { useData } from '../../context/DataContext'
 import { useNavigate } from 'react-router-dom'
 import SelectIcon from './SelectIcon'
+import { useToast } from '../../context/ToastContext'
 
 function AddNew() {
   const {onAddNew, onAddError} = useData()
   const navigate = useNavigate()
+  const { error, success } = useToast()
 
   const todayDate = new Date().toLocaleDateString("en-CA"); // en-CA return yyyy-mm-dd format that input type date needs!
   // const [isLoading, setIsLoading] = useState(false)
@@ -24,7 +26,10 @@ function AddNew() {
       icon,
       deadline,
     })
-    res && navigate('/')
+    if(!res) return error('Something went wrong, try again.')
+
+    success('Todo created with due date today.')
+    navigate('/')
   }
 
   return (

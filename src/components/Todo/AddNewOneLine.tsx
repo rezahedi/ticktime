@@ -1,9 +1,11 @@
 import styles from './AddNew.module.css'
 import { useData } from '../../context/DataContext'
 import SelectIcon from './SelectIcon'
+import { useToast } from '../../context/ToastContext'
 
 function AddNewOneLine() {
   const {onAddNew, onAddError} = useData()
+  const { error, success } = useToast()
 
   const todayDate = new Date().toLocaleDateString("en-CA"); // en-CA return yyyy-mm-dd format that input type date needs!
   // const [isLoading, setIsLoading] = useState(false)
@@ -23,7 +25,10 @@ function AddNewOneLine() {
       description:'',
       deadline: todayDate,
     })
-    res && formElement.reset()
+    if(!res) return error('Something went wrong, try again.')
+
+    success('Todo created with due date today.')
+    formElement.reset();
   }
 
   return (
