@@ -3,14 +3,23 @@ Another todo application!
 
 ## AirTable format
 
-Create a table in AirTable and give it a name, Put name in .env file.
+Create a table in AirTable and give it a name (mine is `Default`), Put the name in .env file. Then create the columns as follow or you can simply copy [my Airtable's base and the data](https://airtable.com/appuFZTTeaDmg0JQa/shrizRcFH1R0MRzCN) for yourself.
 
-__Our AirTable's table columns:__
+__Columns of the main table:__
 ```
 title: string
-completedAt: date
-deadline: date
+description: string
+completedAt: date (US format)
+deadline: date (US format)
 icon: string
+categoryId: link to categories table
+categoryName: string (Normalized from categories table)
+```
+
+__Columns of the categories:__
+```
+name: string
+description: string
 ```
 
 ## Environment variables
