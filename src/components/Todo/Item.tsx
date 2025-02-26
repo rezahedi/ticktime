@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect, useRef } from 'react'
+import { useState, useLayoutEffect, useRef, useEffect } from 'react'
 import styles from './Item.module.css'
 import { TodoProps } from "../../lib/types";
 import { calculateRemainedDays } from '../../lib/dates';
@@ -22,6 +22,13 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
     const height = itemRef.current.offsetHeight;
     itemRef.current.style.height = `${height}px`
   })
+
+  useEffect(() => {
+    if(!itemRef || !itemRef.current) return;
+    itemRef.current.style.height = 'auto'
+    const height = itemRef.current.offsetHeight;
+    itemRef.current.style.height = `${height}px`
+  }, [toggle])
 
   const handleRemoveClick = async () => {
     setIsHiding(true)
