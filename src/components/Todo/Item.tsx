@@ -13,39 +13,20 @@ interface ItemProps {
 function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   const days = calculateRemainedDays(todoItem.deadline)
   const [toggle, setToggle] = useState<boolean>(false)
-  const [isHiding, setIsHiding] = useState<boolean>(false)
   const itemRef = useRef<HTMLDivElement>(null)
   const { success, error } = useToast()
 
-  useLayoutEffect(() => {
-    if(!itemRef || !itemRef.current) return;
-    const height = itemRef.current.offsetHeight;
-    itemRef.current.style.height = `${height}px`
-  })
-
-  useEffect(() => {
-    if(!itemRef || !itemRef.current) return;
-    itemRef.current.style.height = 'auto'
-    const height = itemRef.current.offsetHeight;
-    itemRef.current.style.height = `${height}px`
-  }, [toggle])
-
-  const handleRemoveClick = async () => {
-    setIsHiding(true)
-    // Wait time for 300s hiding animation
-    await setTimeout(()=>onRemoveTodo(todoItem), 300)
+  const handleRemoveClick = () => {
+    onRemoveTodo(todoItem)
   }
 
   const handleDoneClick = async () => {
     if(isCompleted) return;
 
-    setIsHiding(true)
-    // Wait time for 300s hiding animation
-    await setTimeout(async ()=>{
-      const res = await onDoneTodo(todoItem)
-      if(!res) return error('Something with marking todo done went wrong.')
-      success('Todo marked done, Congratulation.')
-    }, 300)
+    const res = await onDoneTodo(todoItem)
+    if(!res) return error('Something with marking todo done went wrong.')
+  
+    success('Todo marked done, Congratulation.')
   }
 
   const handleToggle = () => {
@@ -64,7 +45,7 @@ function Item({ todoItem, onDoneTodo, onRemoveTodo }: ItemProps) {
   }
 
   return (
-    <div ref={itemRef} className={`${isHiding ? styles.hidingAnimation : ''}`}>
+    <div ref={itemRef}>
       <div className={`${styles.item}`} onClick={handleToggle}>
         <div className={styles.icon}>{todoItem.icon}</div>
         <div className={`${styles.content} ${todoItem.temp ? styles.temporary : ''}`}>

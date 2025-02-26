@@ -11,19 +11,6 @@
   overflow: hidden;
   box-sizing: border-box;
 }
-.hidingAnimation{
-  animation-duration: .3s;
-  animation-name: hiding;
-}
-@keyframes hiding {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    height: 0;
-  }
-}
 .icon{
   font-size: 50pt;
   margin:-.5rem;
