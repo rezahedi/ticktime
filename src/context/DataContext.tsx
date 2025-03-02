@@ -26,7 +26,9 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const sortParams = searchParams.get('sort') || ','
   const [ field, order ] = sortParams.split(',')
 
-  const [todoList, setTodoList] = useState<TodoProps[]>([])
+  const [todoList, setTodoList] = useState<TodoProps[]>(
+    JSON.parse( localStorage.getItem('savedTodoList') || '' ) || []
+  )
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
   const [onAddError, setOnAddError] = useState<string>('')
@@ -45,6 +47,14 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const fetchData = async () => {
     setIsLoading(true)
     setError('')
+
+    // If Airtable's ENVs undefined
+    if( !import.meta.env.VITE_AIRTABLE_API_TOKEN || !import.meta.env.VITE_AIRTABLE_BASE_ID || !import.meta.env.VITE_TABLE_NAME ) {
+      setError("Env vars not set, app works on local storage without Airtable!")
+      setIsLoading(false)
+      return;
+    }
+   
     const options = {
       method: 'GET',
       headers: {
@@ -100,6 +110,11 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       item.id === todoId ? { ...item, completedAt} : item
     ))
 
+    // If Airtable's ENVs undefined
+    if( !import.meta.env.VITE_AIRTABLE_API_TOKEN || !import.meta.env.VITE_AIRTABLE_BASE_ID || !import.meta.env.VITE_TABLE_NAME ) {
+      setError("Env vars not set, app works on local storage without Airtable!")
+      return true;
+    }
 
     const options = {
       method: 'PATCH',
@@ -148,6 +163,12 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
     const newTodoList = todoList.filter( item => item.id !== todo.id )
     setTodoList( newTodoList )
 
+    // If Airtable's ENVs undefined
+    if( !import.meta.env.VITE_AIRTABLE_API_TOKEN || !import.meta.env.VITE_AIRTABLE_BASE_ID || !import.meta.env.VITE_TABLE_NAME ) {
+      setError("Env vars not set, app works on local storage without Airtable!")
+      return;
+    }
+
     const options = {
       method: 'DELETE',
       headers: {
@@ -180,6 +201,13 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
       temp: true,
     }
     setTodoList((prevData) => [{...newTodoOptimisticObject}, ...prevData ])
+
+    // If Airtable's ENVs undefined
+    if( !import.meta.env.VITE_AIRTABLE_API_TOKEN || !import.meta.env.VITE_AIRTABLE_BASE_ID || !import.meta.env.VITE_TABLE_NAME ) {
+      setError("Env vars not set, app works on local storage without Airtable!")
+      return true;
+    }
+    
     const options = {
       method: 'POST',
       headers: {

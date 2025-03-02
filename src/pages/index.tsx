@@ -24,8 +24,8 @@ const Main = () => {
   return (
     <>
       <AddNewOneLine />
-      <button onClick={handleClick}>{view==='timeline' ? 'List View' : 'Timeline View'}</button>
       {error && <p className='error'>{error}</p>}
+      <button onClick={handleClick}>{view==='timeline' ? 'List View' : 'Timeline View'}</button>
       {renderView()}
     </>
   )
