@@ -25,7 +25,7 @@ const Main = () => {
     <>
       <AddNewOneLine />
       {error && <p className='error'>{error}</p>}
-      <button onClick={handleClick}>{view==='timeline' ? 'List View' : 'Timeline View'}</button>
+      <button onClick={handleClick} style={{marginBottom:'1rem'}}>{view==='timeline' ? 'List View' : 'Timeline View'}</button>
       {renderView()}
     </>
   )
