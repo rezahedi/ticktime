@@ -27,7 +27,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [ field, order ] = sortParams.split(',')
 
   const [todoList, setTodoList] = useState<TodoProps[]>(
-    JSON.parse( localStorage.getItem('savedTodoList') || '' ) || []
+    JSON.parse( localStorage.getItem('savedTodoList') || '[]' )
   )
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>('')
