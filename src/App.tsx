@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Header />
-      <div className='container'>
+      <div className='container' style={{flexGrow:'1'}}>
         <DataProvider>
           <ToastProvider>
             <Routes>
