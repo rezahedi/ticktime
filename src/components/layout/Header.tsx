@@ -7,7 +7,7 @@ const Header = () => {
       <div className='container'>
         <div style={{display:'flex', alignItems:'center', justifyContent:'space-between', margin:'1rem 0 2rem 0'}}>
           <Link className={styles.logo} to="/">
-            <img src='./public/ticktime.svg' />
+            <img src='./ticktime.svg' />
             <div>
               <h1>TickTime</h1>
               <span>Time to tick the todos!</span>
