@@ -8,7 +8,7 @@ const rootElement = document.getElementById('root')
 if(rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
-      <BrowserRouter>
+      <BrowserRouter basename='/ticktime'>
         <App />
       </BrowserRouter>
     </StrictMode>,
